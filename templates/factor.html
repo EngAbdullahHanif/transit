@@ -1,0 +1,220 @@
+{% extends "base.html" %}
+
+{% block title %}
+پیش فاکتور جدید
+{% endblock title %}
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="page-content-wrapper ">
+
+    <div class="container-fluid">
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <h4 class="page-title m-0">پیش فاکتور جدید</h4>
+                        </div>
+                        <!-- end col -->
+                    </div>
+                    <!-- end row -->
+                </div>
+                <!-- end page-title-box -->
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 text-right mb-3">
+                <a href="{% url 'purchase_list' %}" class="btn btn-light"> برگشت <i class="mdi mdi-keyboard-backspace"></i></a>
+            </div>
+        </div>
+        <!-- end page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card m-b-30">
+                    <div class="card-body">
+                        <form method="POST" novalidate>
+                            {% csrf_token %}
+                            {% for hidden in form.hidden_fields %}
+                              {{ hidden }}
+                            {% endfor %}
+                            <div class="row m-t-30">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="{% render_field form.delivery_date.id_for_label %}">
+                                            {% render_field form.delivery_date.label %}
+                                        </label>
+                                        {% render_field form.delivery_date class="form-control"  type="date" %}
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="{% render_field form.client.id_for_label %}">
+                                            {% render_field form.client.label %}
+                                        </label>
+                                        {% render_field form.client class="form-control"  type="date" %}
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="{% render_field form.receipt_number.id_for_label %}">
+                                            {% render_field form.receipt_number.label %}
+                                        </label>
+                                        {% render_field form.receipt_number class="form-control" placeholder=form.receipt_number.label %}
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="{% render_field form.saller.id_for_label %}">
+                                            {% render_field form.saller.label %}
+                                        </label>
+                                        {% render_field form.saller class="form-control" placeholder=form.saller.label %}
+                                    </div>
+                                </div>
+                            </div>
+                            {{ formset.management_form }}
+                            {% for form in formset %}
+                              <div class="row form-row m-t-10">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="{% render_field form.description.id_for_label %}">{% render_field form.description.label %}</label>
+                                        {% render_field form.description class="form-control" placeholder=form.description.label %}
+                                        {% for error in form.description.errors %}
+                                          <span class="help-block text-danger">{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="{% render_field form.count.id_for_label %}">{% render_field form.count.label %}</label>
+                                        {% render_field form.count class="form-control" placeholder=form.count.label %}
+                                        {% for error in form.count.errors %}
+                                          <span class="help-block text-danger">{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                  <div class="col-md-2">
+                                      <div class="form-group">
+                                          <label for="{% render_field form.packed_type.id_for_label %}">{% render_field form.packed_type.label %}</label>
+                                          {% render_field form.packed_type class="form-control" placeholder=form.packed_type.label %}
+                                          {% for error in form.packed_type.errors %}
+                                            <span class="help-block text-danger">{{ error }}</span>
+                                          {% endfor %}
+                                      </div>
+                                  </div>
+                                  <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="{% render_field form.container_type.id_for_label %}">{% render_field form.container_type.label %}</label>
+                                        {% render_field form.container_type class="form-control" placeholder=form.container_type.label %}
+                                        {% for error in form.container_type.errors %}
+                                          <span class="help-block text-danger">{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="{% render_field form.packed_type.id_for_label %}">{% render_field form.price.label %}</label>
+                                        {% render_field form.price class="form-control" placeholder=form.price.label %}
+                                        {% for error in form.price.errors %}
+                                          <span class="help-block text-danger">{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                  <div class="col-md-2">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-success btn-block mt-4 add-form-row">اضافه کردن</button>
+                                    </div>
+                                  </div>
+                              </div>
+                            {% endfor %}
+
+                            <div class="row justify-content-end">
+                                <div class="col-md-2 text-right">
+                                    <input type="submit" value="ارسال" class="btn btn-primary">
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div> <!-- end col -->
+        </div>
+
+        
+        
+        
+        <!-- end row -->
+
+    </div><!-- container fluid -->
+
+</div> <!-- Page content Wrapper -->
+
+</div> <!-- content -->
+{% endblock content %}
+
+{% block extra_script %}
+<script type="text/javascript">
+    function updateElementIndex(el, prefix, ndx) {
+        var id_regex = new RegExp('(' + prefix + '-\\d+)');
+        var replacement = prefix + '-' + ndx;
+        if ($(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex, replacement));
+        if (el.id) el.id = el.id.replace(id_regex, replacement);
+        if (el.name) el.name = el.name.replace(id_regex, replacement);
+    }
+    function cloneMore(selector, prefix) {
+        var newElement = $(selector).clone(true);
+        var total = $('#id_' + prefix + '-TOTAL_FORMS').val();
+        newElement.find(':input:not([type=button]):not([type=submit]):not([type=reset])').each(function() {
+            var name = $(this).attr('name')
+            if(name) {
+                name = name.replace('-' + (total-1) + '-', '-' + total + '-');
+                var id = 'id_' + name;
+                $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+            }
+        });
+        newElement.find('label').each(function() {
+            var forValue = $(this).attr('for');
+            if (forValue) {
+              forValue = forValue.replace('-' + (total-1) + '-', '-' + total + '-');
+              $(this).attr({'for': forValue});
+            }
+        });
+        total++;
+        $('#id_' + prefix + '-TOTAL_FORMS').val(total);
+        $(selector).after(newElement);
+        var conditionRow = $('.form-row:not(:last)');
+        conditionRow.find('.btn.add-form-row')
+        .removeClass('btn-success').addClass('btn-danger')
+        .removeClass('add-form-row').addClass('remove-form-row')
+        .html('حذف کردن');
+        return false;
+    }
+    function deleteForm(prefix, btn) {
+        var total = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
+        if (total > 1){
+            btn.closest('.form-row').remove();
+            var forms = $('.form-row');
+            $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
+            for (var i=0, formCount=forms.length; i<formCount; i++) {
+                $(forms.get(i)).find(':input').each(function() {
+                    updateElementIndex(this, prefix, i);
+                });
+            }
+        }
+        return false;
+    }
+    $(document).on('click', '.add-form-row', function(e){
+        e.preventDefault();
+        cloneMore('.form-row:last', 'form');
+        return false;
+    });
+    $(document).on('click', '.remove-form-row', function(e){
+        e.preventDefault();
+        deleteForm('form', $(this));
+        return false;
+    });
+    
+    </script>
+{% endblock extra_script %}

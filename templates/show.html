@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+
+<!-- Mirrored from rtl-temp.ir/Theme/Zinzer/vertical-rtl/ by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 11 Jun 2019 05:42:14 GMT -->
+{% load static %}
+<head>
+    <meta charset=" UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <title>روشن زغفران | چاپ پیش فاکتور</title>
+    <meta content="Admin Dashboard" name="description" />
+    <meta content="ThemeDesign" name="author" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+
+    <!-- morris css -->
+    <link rel="stylesheet" href="{% static 'plugins/morris/morris.css' %}">
+
+    <link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/css/icons.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- DataTables -->
+    <link href="{% static 'plugins/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'plugins/datatables/buttons.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+
+    <!-- Responsive datatable examples -->
+    <link href="{% static 'plugins/datatables/responsive.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{% static 'assets/css/print.css' %}">
+    <script src="{% static 'assets/js/print.js' %}"></script>
+    
+    <style>
+        @font-face {
+            font-family: Roboto;
+            src: url('../../static/assets/font/Roboto-Regular.ttf');
+        }
+        *{
+            font-family: Roboto;
+        }
+        
+        @media print {
+            #print-btn{
+                display: none;
+            }
+            /* #onp{
+                background-color: blue;
+            }
+            *{
+                background-color: white;
+            }
+            html{
+                background-color: white;
+            } */
+        }
+        
+    </style>
+</head>
+
+
+<body class="fixed-left">
+
+    <!-- Begin page -->
+    <div id="wrapper">
+       <div class="container">
+           <div class="row">
+               <div class="col-4">
+                   <h2>روشن زعفران</h2>
+                   <p>
+                       <strong>آدرس: </strong>
+                       افغانستان، هرات، سرک قول اردو، نبش جوی انجیل، گوهرشاد 11
+                   </p>
+                   <p>
+                       <strong>شماره های تماس: </strong>
+                       +93780483333 - +93792523333
+
+                   </p>
+                   <p>
+                       <strong>ویب سایت: </strong>
+                       www.roshansaffron.com
+                   </p>
+                   <p>
+                       <strong>آدرس الکترونیک: </strong>
+                       info@roshanaffron.com
+                   </p>
+                   <a href="javascript:window.print()" id="print-btn" class="btn btn-block btn-success waves-effect waves-light"><i class="fa fa-print"></i></a>
+               </div>
+               <div class="col-4 offset-1 text-center">
+                   <img src="{% static 'assets/images/logo.jpg' %}" class="w-50 mt-5" alt="">
+               </div>
+               <div class="col-3 justify-content-center">
+                   <h1>پیش فاکتور</h1>
+                   <p>
+                       <strong>تاریخ: </strong>
+                       3/2/2020
+                   </p>
+                   <p>
+                       <strong>نمبر فاکتور:</strong>
+                       {{ delivery.receipt_number }}
+                   </p>
+                   <p>
+                       <strong>آی دی مشتری: </strong>
+                       {{ delivery.client.id }}   
+                   </p>
+               </div>
+           </div>
+           <hr class="bg-primary" style="height: 15px;">
+
+           <h3 class="mb-4">مشتری:</h3>
+           <div class="row">
+               <div class="col-3">
+                   <p>
+                       <strong>نام: </strong>
+                       {{ delivery.client.fullname }}
+                   </p>
+               </div>
+               <div class="col-3">
+                <p>
+                    <strong>نام تجاری: </strong>
+                    {{ delivery.client.commercial_name}}
+                </p>
+               </div>
+               <div class="col-3"> 
+                <p>
+                    <strong>شماره تماس: </strong>
+                    {{ delivery.client.phone_number }}
+                </p>
+               </div>
+               <div class="col-3">
+                <p>
+                    <strong>آدرس: </strong>
+                    هرات، افغانستان
+                </p>
+               </div>
+           </div>
+           <div class="row container mt-4">
+               <p class="col-1 bg-primary text-center text-white py-3" style="font-size:20px; border: 0.1px solid gray; border-left: 0; margin-bottom: 0;">شماره</p>
+               <p class="col-2 bg-primary text-center text-white py-3" style="font-size:20px; border: 0.1px solid gray; border-left: 0; margin-bottom: 0;">تفصیلات</p>
+               <p class="col-1 bg-primary text-center text-white py-3" style="font-size:20px; border: 0.1px solid gray; border-left: 0; margin-bottom: 0;">تعداد</p>
+               <p class="col-2 bg-primary text-center text-white py-3" style="font-size:20px; border: 0.1px solid gray; border-left: 0; margin-bottom: 0;">نوع بسته بندی</p>
+               <p class="col-2 bg-primary text-center text-white py-3" style="font-size:20px; border: 0.1px solid gray; border-left: 0; margin-bottom: 0;">نوع ظرف</p>
+               <p class="col-2 bg-primary text-center text-white py-3" style="font-size:20px; border: 0.1px solid gray; border-left: 0; margin-bottom: 0;">قیمت فی</p>
+               <p class="col-2 bg-primary text-center text-white py-3" style="font-size:20px; border: 0.1px solid gray; border-left: 0; margin-bottom: 0;">قیمت مجموع</p>
+           </div>
+
+           {% for item in items %}
+           <div class="row container">
+            <p class="col-1 text-center text-dark py-3" style="border: 0.1px solid gray; border-left: 0; border-top: 0; margin-bottom: 0;">{{ forloop.counter }}</p>
+            <p class="col-2 text-center text-dark py-3" style="border: 0.1px solid gray; border-left: 0; border-top: 0; margin-bottom: 0;">{{ item.description }}</p>
+            <p class="count col-1 text-center text-dark py-3" style="border: 0.1px solid gray; border-left: 0; border-top: 0; margin-bottom: 0;">{{ item.count }}</p>
+            <p class="col-2 text-center text-dark py-3" style="border: 0.1px solid gray; border-left: 0; border-top: 0; margin-bottom: 0;">{{ item.packed_type }}</p>
+            <p class="col-2 text-center text-dark py-3" style="border: 0.1px solid gray; border-left: 0; border-top: 0; margin-bottom: 0;">{{ item.container_type }}</p>
+            <p class="unit_price col-2 text-center text-dark py-3" style="border: 0.1px solid gray;  border-top: 0; margin-bottom: 0;">{{ item.price }}</p>
+            <p class="total_price col-2 text-center text-dark py-3" style="border: 0.1px solid gray; border-right: 0; border-top: 0; margin-bottom: 0;"></p>
+        </div>
+           {% endfor %}
+
+        <div class="row container mt-5">
+            <p class="col-8">
+                    <label for="note">نوت:</label>
+                    <textarea class="form-control" cols="30" rows="8"></textarea>
+                
+            </p>
+            <div class="col-4">
+                <div class="row">
+                    <p class="col-6 bg-primary text-center text-white py-3" style="font-size:20px; border: 0.1px solid gray; border-left: 0; margin-bottom: 0;">قیمت کل</p>
+            <p class="col-6 text-center text-dark py-3" style="border: 0.1px solid gray; border-right: 0; margin-bottom: 0;">{{ total_price }}</p>
+                </div>
+                <div class="row">
+                    <p class="col-6 bg-primary text-center text-white py-3" style="font-size:20px; border: 0.1px solid gray; border-left: 0; margin-bottom: 0;">تخفیف</p>
+            <p class="col-6 text-center text-dark py-3" style="border: 0.1px solid gray; border-right: 0; border-top: 0; margin-bottom: 0;"></p>
+                </div>
+                <div class="row">
+                    <p class="col-6 bg-primary text-center text-white py-3" style="font-size:20px; border: 0.1px solid gray; border-left: 0; margin-bottom: 0;">قیمت قابل پرداخت</p>
+            <p class="col-6 text-center text-dark py-3" style="border: 0.1px solid gray; border-right: 0; border-top: 0; margin-bottom: 0;">{{ total_price }}</p>
+                </div>
+            </div>
+            
+        </div>
+        
+       </div>
+    </div>
+    
+    <div>
+    </div>
+
+    <script>
+        var count = document.getElementsByClassName('count');
+        var unit_price = document.getElementsByClassName('unit_price');
+            
+        for(var i = 0; i < count.length; i++){
+            document.getElementsByClassName('total_price')[i].innerHTML = Number(count[i].innerHTML) * Number(unit_price[i].innerHTML);
+        }
+
+        
+    </script>
+</body>
+</html>
+     

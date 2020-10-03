@@ -1,0 +1,40 @@
+#header{
+    background: #4ec6ee;
+    height: 55px;
+}
+
+div.breadcrumbs{
+    background: #036b8d;
+}
+#branding h1, #branding h1 a:link, #branding h1 a:visited{
+    color: #fff;
+}
+
+
+#user-tools{
+    font-size: 14px;
+    font-weight: bold;
+}
+
+
+.module h2, .module caption, .inline-group h2{
+    background: #0bcfaf;
+}
+
+
+a.section:link, a.section:visited{
+    font-weight: bold;
+    font-size: 14px;
+}
+
+
+.dashboard #content{
+    width: 90%;
+}
+
+fieldset{
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+}
+
