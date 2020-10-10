@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+{% block title %}
+  بارنامه
+{% endblock title %}
+{% load static %}
+{% load crispy_forms_tags %} 
+{% block content %}
+<div class="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <h5 class="m-0 text-center">
+                                جزیات بارنامه
+                            </h5>
+                        </div>
+                        <!-- end col -->
+                    </div>
+                <!-- end row -->
+                </div>
+                <!-- end page-title-box -->
+            </div>
+        </div>
+        <!-- end page title -->
+
+        <!-- Page main content starts -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card m-b-30">
+                   <div class="card-body">
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="invoice-title">
+                            <h5 class="float-right m-t-0">
+                            نمبر بیحک : 34234234 
+                            </h5>
+                            <h5 class="m-t-0">
+                              نمبر بارنامه :123234
+                            </h5>
+                          </div>
+                          <hr />
+
+                          <div class="row">
+                            <div class="col-6">
+                              <p>تاریخ ورود: 21/1/2020
+                              <br/>
+                              <br/>
+                              تاریخ  خروج: 21/1/2020
+                              <br/>
+                              <br/>
+                            </div>
+                            
+                            <div class="col-6 ">
+                              <p class="">
+                               کمرک مبدأ: اسلام قلعه
+                              </p>
+                              <p class="">
+                               کمرک مقصد: شهر هرات
+                              </p>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-6">
+                              <p>صاحب مال: حاجي زلمی
+                              <br/>
+                              <br/>
+                              اکت (سي-ار-ام): 98008
+                              <br/>
+                              <br/>
+                            </div>
+                            
+                            <div class="col-6 ">
+                              <p class="">
+                               نمبر کانتینر: چادری
+                              </p>
+                              <p class="">
+                               کانتینر خالی: بازکشتی
+                              </p>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-6">
+                              <p>نوع جنس: البسه و کتابچه طبق اسناد
+                              <br/>
+                              <br/>
+                              تعداد: 700 نکنه
+                              <br/>
+                              <br/>
+                            </div>
+                            
+                            <div class="col-6 ">
+                              <p class="">
+                               980809: اسلام قلعه
+                              </p>
+                              <p class="">
+                               وزن مجموعه: 980989
+                              </p>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-6">
+                              <p>دریور: متین
+                              <br/>
+                              <br/>
+                              نمبر لاری: 70009
+                              <br/>
+                              <br/>
+                            </div>
+                            
+                            <div class="col-6 ">
+                              <p class="">
+                                 ترانسپورت: ترانزیت
+                              </p>
+                              <p class="">
+                               وزن مجموعه: 980989
+                              </p>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-6">
+                              <p>شناسی اسب: 234234
+                              <br/>
+                              <br/>
+                              شناسی تیلر: 232344
+                              <br/>
+                              <br/>
+                            </div>
+                            
+                            <div class="col-6 ">
+                              <p class="">
+                                 تین جواز: 23423
+                              </p>
+                              <p class="">
+                             
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row " style="margin-top: 50px;">
+                        <div class="col-12">
+                          <div class="panel panel-default">
+                            <div class="">                    
+                              <div class="d-print-none mo-mt-2">
+                                <div class="float-right">
+                                  <a
+                                    href="#factor"
+                                    class="btn btn-success waves-effect waves-light"
+                                    ><i class="fa fa-print"></i
+                                  ></a>
+                                  <a
+                                    href="{% url 'bill-list' %}"
+                                    class="btn btn-primary waves-effect waves-light"
+                                    >بازکشت</a
+                                  >
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- end row -->
+                    </div>
+                </div>
+            </div>
+            <!-- end col -->
+        </div>
+        <!-- Page main content ends -->
+        <!-- end row -->
+    </div>
+    <!-- container fluid -->
+</div>
+<!-- Page content Wrapper -->
+
+</div>
+<!-- content -->
+
+        
+{% endblock content %}
+{% block extra_script %}
+<script src="{% static 'assets/js/custom.js' %}"></script>
+{% endblock extra_script %}
