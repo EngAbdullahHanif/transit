@@ -147,101 +147,97 @@ background:#eee;
                         <div class="col-12">
                           <div class="invoice-title">
                             <h5 class="float-right m-t-0">
-                            نمبر بیحک : {{bill.check_number}} 
+                            تاریخ : {{farebill.check_number}} 
                             </h5>
                             <h5 class="m-t-0">
-                              نمبر بارنامه :{{ bill.bill_number }}
+                              نمبر بارنامه :{{ farebill.bill.bill_number }}
                             </h5>
                           </div>
                           <hr />
 
                           <div class="row">
                             <div class="col-6">
-                              <p>تاریخ ورود: {{bill.arrival_date}}
+                              <p>اسم شرکت: شرکت احمدی
                               <br/>
                               <br/>
-                              تاریخ  خروج: {{bill.lading_date}}
+                              اسم صاحب بار: {{farebill.bill.consignee.name}}
                               <br/>
                               <br/>
                             </div>
                             
                             <div class="col-6 ">
                               <p class="">
-                               کمرک مبدأ: {{bill.origin_custom}}
+                               نمبر کانتینر: {{farebill.bill.container_number}}
                               </p>
                               <p class="">
-                               کمرک مقصد: {{bill.destination_custom}}
+                               شماره تیلیفون صاحب بار: {{farebill.bill.consignee.phone_number}}
                               </p>
                             </div>
                           </div>
 
                           <div class="row">
                             <div class="col-6">
-                              <p>صاحب مال: {{bill.consignee}}
+                              <p>نمبر موتر: 23423
                               <br/>
                               <br/>
-                              اکت (سي-ار-ام): {{bill.act_cmr}}
-                              <br/>
-                              <br/>
+                              اسم دریور: {{farebill.bill.driver}}
+                             
                             </div>
                             
                             <div class="col-6 ">
                               <p class="">
-                               نمبر کانتینر: {{bill.container_number}}
+                               ترانسپورت: {{farebill.bill.transport}}
                               </p>
                               <p class="">
-                               کانتینر خالی: {{bill.empty_number}}
+                               اسم جنس: {{farebill.bill.commodity}}
                               </p>
                             </div>
                           </div>
 
                           <div class="row">
                             <div class="col-6">
-                              <p>نوع جنس: {{bill.commodity}}
+                              <p>تعداد: {{farebill.bill.quantity}}
                               <br/>
                               <br/>
-                              تعداد: {{bill.quantity}}
                               <br/>
                               <br/>
                             </div>
                             
                             <div class="col-6 ">
                               <p class="">
-                                وزن خالص: {{bill.net_weight}}
+                              کرایه: {{farebill.rent}}
                               </p>
                               <p class="">
-                               وزن مجموعه: 980989
                               </p>
                             </div>
                           </div>
 
                           <div class="row">
                             <div class="col-6">
-                              <p>دریور: {{bill.driver}}
+                            مصارف حمالی بندر اسلام قلعه: {{farebill.porterage_expenses}}
                               <br/>
                               <br/>
-                              نمبر لاری: {{bill.truck_number}}
+                              <p>کمیشن بارچلانی مبلغ: {{farebill.commission_fee}}
+                              <br/>
+                              <br/>
                               <br/>
                               <br/>
                             </div>
                             
                             <div class="col-6 ">
-                              <p class="">
-                                 ترانسپورت: {{bill.transport}}
-                              </p>
-                              <p class="">
-                              شناسی اسب: {{bill.asab_shasi}}
-                              </p>
+                               انوایس، کاپی و اتحادیه مبلغ: {{farebill.invoice_copy}}
+                              <br/>
+                              <br/>
+                              مصارف کمرک اسلام قلعه: {{farebill.custom_expenses}}
+
                             </div>
                           </div>
 
                           <div class="row">
                             <div class="col-6">
-                              شناسی تیلر: {{bill.truck_shasi}}
-                            </div>
-                            
-                            <div class="col-6 ">
-                                 تین جواز: {{bill.tin_jawaz}}
+                            <h3>
+                                جمله مبلغ: 324223
+                             </h3>
                             </div>
                           </div>
                         </div>

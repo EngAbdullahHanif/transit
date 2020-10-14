@@ -1,119 +1,126 @@
 {% load static %}
 <!-- ========== Left Sidebar Start ========== -->
 <div class="left side-menu">
-    <button type="button" class="button-menu-mobile button-menu-mobile-topbar open-left waves-effect">
-        <i class="mdi mdi-close"></i>
-    </button>
+  <button
+    type="button"
+    class="button-menu-mobile button-menu-mobile-topbar open-left waves-effect"
+  >
+    <i class="mdi mdi-close"></i>
+  </button>
 
-    <div class="left-side-logo d-block d-lg-none">
-        <div class="text-center">
-
-            <a href="index-2.html" class="logo"><h3 style="color: #5985ee; font-style: italic;">روشن زعفران</h3></a>
-        </div>
+  <div class="left-side-logo d-block d-lg-none">
+    <div class="text-center">
+      <a href="index-2.html" class="logo"
+        ><h3 style="color: #5985ee; font-style: italic">میرویس جمیل</h3></a
+      >
     </div>
+  </div>
 
-    <div class="sidebar-inner slimscrollleft">
+  <div class="sidebar-inner slimscrollleft">
+    <div id="sidebar-menu">
+      <ul>
+        <li>
+          <a href="{% url 'home' %}" class="waves-effect">
+            <i class="dripicons-home"></i>
+            <span>
+              داشبورد
+              <span class="badge badge-success badge-pill float-right"></span
+            ></span>
+          </a>
+        </li>
 
-        <div id="sidebar-menu">
-            <ul>
+        <li class="has_sub">
+          <a href="javascript:void(0);" class="waves-effect"
+            ><i class="dripicons-briefcase"></i> <span> بارنامه ها </span>
+            <span class="menu-arrow float-right"
+              ><i class="mdi mdi-chevron-right"></i></span
+          ></a>
+          <ul class="list-unstyled">
+            <li><a href="{% url 'bills-list' %}">لست بارنامه ها</a></li>
+            <li><a href="{% url 'bill-create' %}">ثبت بارنامه جدید</a></li>
+            <li><a href="{% url 'farebills-list' %}">لست کرایه خطها</a></li>
+            <li><a href="">گزارشات</a></li>
+          </ul>
+        </li>
 
-                <li>
-                    <a href="{% url 'home' %}" class="waves-effect">
-                        <i class="dripicons-home"></i>
-                        <span> داشبورد <span class="badge badge-success badge-pill float-right"></span></span>
-                    </a>
-                </li>
+        <li class="has_sub">
+          <a href="javascript:void(0);" class="waves-effect"
+            ><i class="dripicons-archive"></i> <span> مشتریان </span>
+            <span class="menu-arrow float-right"
+              ><i class="mdi mdi-chevron-right"></i></span
+          ></a>
+          <ul class="list-unstyled">
+            <li><a href="{% url 'consignees-list' %}">لست مشتریان </a></li>
+            <li><a href="{% url 'consignee-create' %}">ثبت مشتری جدید</a></li>
+            <li><a href="">گزارشات</a></li>
+          </ul>
+        </li>
 
-                <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-briefcase"></i>
-                        <span> خریداری ها </span> <span class="menu-arrow float-right"><i
-                                class="mdi mdi-chevron-right"></i></span></a>
-                    <ul class="list-unstyled">
-                        <li><a href="{% url 'purchase_create' %}">خریداری جدید</a></li>
-                        <li><a href="{% url 'purchase_list' %}">نمایش خریداری ها</a></li>
-                        <li><a href="{% url 'seller_list' %}">فروشنده ها</a></li>
-                        <li><a href="{% url 'seller_account_list' %}">پرداختی ها</a></li>
-                        <li><a href="{% url 'purchase_reports' %}">گزارشات</a></li>
-                    </ul>
-                </li>
+        <li class="has_sub">
+          <a href="javascript:void(0);" class="waves-effect"
+            ><i class="dripicons-rocket"></i> <span> محصول </span>
+            <span class="menu-arrow float-right"
+              ><i class="mdi mdi-chevron-right"></i></span
+          ></a>
+          <ul class="list-unstyled">
+            <li><a href="{% url 'recives-list' %}">لست محصول </a></li>
+            <li><a href="">گزارشات</a></li>
+          </ul>
+        </li>
 
-                <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-archive"></i> <span>
-                            فروشات </span> <span class="menu-arrow float-right"><i
-                                class="mdi mdi-chevron-right"></i></span></a>
-                    <ul class="list-unstyled">
-                        <li><a href="{% url 'deliveries' %}">نمایش فروشات</a></li>
-                        <li><a href="{% url 'delivery-create' %}">ثبت فروشات</a></li>
-                        <li><a href="{% url 'pre_factor' %}">پیش فاکتور</a></li>
-                        <li><a href="{% url 'accounts' %}">حسابات</a></li>
-                        <li><a href="{% url 'clients' %}">مشتریان</a></li>
-                        <li><a href="{% url 'delivery-report' %}">گزارشات</a></li>
-                    </ul>
-                </li>
+        <li class="has_sub">
+          <a href="javascript:void(0);" class="waves-effect"
+            ><i class="dripicons-rocket"></i> <span> حسابات </span>
+            <span class="menu-arrow float-right"
+              ><i class="mdi mdi-chevron-right"></i></span
+          ></a>
+          <ul class="list-unstyled">
+            <li><a href="">حسابات رسیده</a></li>
+            <li><a href="">پرداخت حساب جدید</a></li>
+            <li><a href="">گزارشات</a></li>
+          </ul>
+        </li>
 
-                <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-rocket"></i> <span>
-                            گدام </span> <span class="menu-arrow float-right"><i
-                                class="mdi mdi-chevron-right"></i></span></a>
-                    <ul class="list-unstyled">
-                        <li><a href="{% url 'receipt' %}">رسیده گی ها</a></li>
-                        <li><a href="{% url 'delivered' %}">برده گی ها</a></li>
-                        <li><a href="{% url 'receipts-delivered-report' %}">گزارشات</a></li>
-                    </ul>
-                </li>
-
-                <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-rocket"></i> <span>
-                            پروسس ها </span> <span class="menu-arrow float-right"><i
-                                class="mdi mdi-chevron-right"></i></span></a>
-                    <ul class="list-unstyled">
-                        <li><a href="{% url 'process_create' %}">پروسس جدید</a></li>
-                        <li><a href="{% url 'process_list' %}">نمایش پروسس ها</a></li>
-                        <li><a href="{% url 'process_reports' %}">گزارشات</a></li>
-                    </ul>
-                </li>
-                <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-rocket"></i> <span>
-                             مصارف </span> <span class="menu-arrow float-right"><i
-                                class="mdi mdi-chevron-right"></i></span></a>
-                    <ul class="list-unstyled">
-                        <li><a href="{% url 'items' %}">نمایش مصارف روزانه</a></li>
-                        <li><a href="{% url 'item-create' %}"> ثبت مصارف روزانه</a></li>
-                        <li><a href="{% url 'expenses-report' %}">گزارشات</a></li>
-                        </ul>
-                </li>
-                <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-rocket"></i> <span>
-                             دارایها </span> <span class="menu-arrow float-right"><i
-                                class="mdi mdi-chevron-right"></i></span></a>
-                    <ul class="list-unstyled">
-                        <li><a href="{% url 'property-items' %}">نمایش دارایها</a></li>
-                        <li><a href="{% url 'property-item-create' %}"> ثبت دارایها </a></li>
-                        </ul>
-                </li>
-                <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-rocket"></i> <span>
-                        کارمندان</span> <span class="menu-arrow float-right"><i
-                                class="mdi mdi-chevron-right"></i></span></a>
-                    <ul class="list-unstyled">
-                        <li><a href="{% url 'employee_create' %}">کارمند جدید</a></li>
-                        <li><a href="{% url 'staff_list' %}">نمایش کارمندان</a></li>
-                    </ul>
-                </li>
-
-                <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-rocket"></i> <span>
-                        متفرقه</span> <span class="menu-arrow float-right"><i
-                                class="mdi mdi-chevron-right"></i></span></a>
-                    <ul class="list-unstyled">
-                        <li><a href="{% url 'container_list' %}">ظروف</a></li>
-                        <li><a href="{% url 'product_list' %}">محصولات</a></li>
-                        <li><a href="{% url 'measurment_unit_list' %}">واحدات</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-        <div class="clearfix"></div>
-    </div> <!-- end sidebarinner -->
+        <li class="has_sub">
+          <a href="javascript:void(0);" class="waves-effect"
+            ><i class="dripicons-rocket"></i> <span> مصارف </span>
+            <span class="menu-arrow float-right"
+              ><i class="mdi mdi-chevron-right"></i></span
+          ></a>
+          <ul class="list-unstyled">
+            <li><a href="">لست مصارف روزانه</a></li>
+            <li><a href=""> ثبت مصارف روزانه</a></li>
+            <li><a href="">گزارشات</a></li>
+          </ul>
+        </li>
+        <li class="has_sub">
+          <a href="javascript:void(0);" class="waves-effect"
+            ><i class="dripicons-rocket"></i> <span> دارایها </span>
+            <span class="menu-arrow float-right"
+              ><i class="mdi mdi-chevron-right"></i></span
+          ></a>
+          <ul class="list-unstyled">
+            <li><a href="">نمایش دارایها</a></li>
+            <li>
+              <a href=""> ثبت دارایها </a>
+            </li>
+          </ul>
+        </li>
+        <li class="has_sub">
+          <a href="javascript:void(0);" class="waves-effect"
+            ><i class="dripicons-rocket"></i> <span> کارمندان</span>
+            <span class="menu-arrow float-right"
+              ><i class="mdi mdi-chevron-right"></i></span
+          ></a>
+          <ul class="list-unstyled">
+            <li><a href="">کارمند جدید</a></li>
+            <li><a href="">نمایش کارمندان</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+  <!-- end sidebarinner -->
 </div>
 <!-- Left Sidebar End -->

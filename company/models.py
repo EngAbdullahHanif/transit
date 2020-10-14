@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 
 WEIGHT_CHOICES = (
@@ -17,7 +18,7 @@ class Consignee(models.Model):
 
 
 class Commissionaire(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=20, verbose_name='نام کمیشنکار')
 
     def __str__(self):
         return self.name
@@ -46,8 +47,8 @@ class BillofLading(models.Model):
     commodity = models.CharField(max_length=100, verbose_name='نوع جنس')
     quantity = models.CharField(max_length=20, verbose_name='تعداد')
     net_weight = models.IntegerField(verbose_name='وزن خالص')
-    conatiner_weight = models.CharField(
-        max_length=1, choices=WEIGHT_CHOICES, verbose_name='وزن کانتنر')
+    container_weight = models.CharField(
+        max_length=1, choices=WEIGHT_CHOICES, verbose_name='وزن کانتنر', default=0)
     licens_number = models.IntegerField(verbose_name='شماره جواز')
     b_l_number = models.IntegerField(verbose_name='شماره B/L')
     driver = models.CharField(max_length=20, verbose_name='درایور')
@@ -59,23 +60,47 @@ class BillofLading(models.Model):
     truck_shasi = models.IntegerField(verbose_name='شاسی تیلر')
     tin_jawaz = models.IntegerField(verbose_name='تنن جواز (TIN JAWAZ)')
 
+    @property
+    def total_weight(self):
+        total = 0
+        if self.container_weight is not int(0):
+            total = self.net_weight + int(self.container_weight)
+        else:
+            total = self.net_weight
+        return total
+
 
 class FareBill(models.Model):
     bill = models.ForeignKey(
         BillofLading, on_delete=models.CASCADE)
-    porterage_expenses = models.IntegerField()
-    invoice_copy = models.IntegerField()
-    commission_fee = models.IntegerField()
-    custom_expenses = models.IntegerField()
-    rent = models.IntegerField()
+    porterage_expenses = models.IntegerField(verbose_name="مصارف حمالی")
+    invoice_copy = models.IntegerField(
+        verbose_name='مصارف انوایس، کاپی و اتحادیه')
+    commission_fee = models.IntegerField(verbose_name='کمیشن بارچلانی')
+    custom_expenses = models.IntegerField(verbose_name='مصارف کمرک اسلام قلعه')
+    rent = models.IntegerField(verbose_name='کرایه')
+    farebill_date = models.DateField(
+        auto_now=False, auto_now_add=False, verbose_name='تاریخ')
+
+    def __str__(self):
+        return self.bill.bill_number
 
 
 class Recive(models.Model):
-    billoflading = models.ForeignKey(
+    bill = models.ForeignKey(
         BillofLading, on_delete=models.CASCADE)
-    taliban_expenses = models.IntegerField()
-    eslam_qala_expenses = models.IntegerField()
-    bascol_expenses = models.IntegerField()
+    i_number = models.IntegerField(verbose_name="ای نمبر ")
+    taliban_expenses = models.IntegerField(verbose_name="مصارف ظالمان")
+    eslam_qala_expenses = models.IntegerField(verbose_name="مصارف اسلام قلعه")
+    bascol_expenses = models.IntegerField(verbose_name="مصارف باسکول")
 
     def __str__(self):
         return self.billoflading.bill_number
+
+
+class Account(models.Model):
+    consignee = models.ForeignKey(
+        Consignee, on_delete=models.CASCADE, null=True, blank=True, verbose_name=('صاحب بار'))
+    recieve_date = models.DateField(
+        verbose_name="تاریخ رسید", default=timezone.now)
+    amount = models.FloatField(verbose_name="مقدار")

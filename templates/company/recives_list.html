@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}
-  بارنامه 
+ محصول 
 {% endblock title %}
 {% load static %}
 {% load crispy_forms_tags %} 
@@ -14,7 +14,7 @@
                     <div class="row align-items-center">
                         <div class="col-md-12">
                             <h5 class="m-0 text-center">
-                                لست تمامی بارنامه ها
+                                لست تمامی محصول ها
                             </h5>
                         </div>
                         <!-- end col -->
@@ -57,49 +57,43 @@
                             <thead>
                                 <tr>
                                 <th>#</th>
-                                <th>نمبر بارنامه</th>  
                                 <th>صاحب مال</th>
-                                <th>اکت CMR</th>
-                                <th>نمبر کانتینر</th>
-                                <th>نمبر لاري</th>
-                                <th>وزن خالص</th>
-                                <th>تاریخ ورود</th>
+                                <th>نمبر بارنامه</th>  
+                                <th>ای نمبر</th>
+                                <th>مصارف طالبان</th>
+                                <th>مصارف کمرک</th>
+                                <th>مصارف باسکول</th>
+                                <th> تاریخ</th>
                                 <!-- <th>خواندن/ اپدیت / حذف</th> -->
                                 <th style="border-right: solid rgb(231, 230, 230) 1.4px;">عملیات </th>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                {% for bill in bills %}
+                                {% for recive in recives %}
                                 <tr>
                                 <td>{{ forloop.counter }}</td>
-                                <td>{{ bill.bill_number }}</td>
-                                <td>{{ bill.consignee.name }}</td>
-                                <td>{{ bill.act_cmr }}</td>
-                                <td>{{ bill.container_number }}</td>
-                                <td>{{ bill.truck_number }}</td>
-                                <td>{{ bill.net_weight }}</td>
-                                <td>{{ bill.arrival_date }}</td>
+                                <td>{{ recive.bill.consignee.name }}</td>
+                                <td>{{ recive.bill.bill_number }}</td>
+                                <td>{{ recive.i_number }}</td>
+                                <td>{{ recive.taliban_expenses }}</td>
+                                <td>{{ recive.eslam_qala_expenses }}</td>
+                                <td>{{ recive.bascol_expenses }}</td>
+                                <td>{{ recive.bill.arrival_date }}</td>
                                 <td class="text-center">
                                     <!-- Read bill buttons -->
-                                    <a href="{% url 'bill-detail' bill.pk %}" class="btn btn-info btn-sm">
+                                    <a href="" class="btn btn-info btn-sm">
                                     <span class="">جزیات</span>
                                     </a>
                                     <!-- Update bill buttons -->
-                                    <a href="{% url 'bill-update' bill.pk %}" class=" btn btn-info btn-sm">
+                                    <a href="{% url 'recive-update' recive.pk %}" class=" btn btn-info btn-sm">
                                     <span class="">اپدیت</span>
                                     </a>
                                     <!-- Delete bill buttons -->
                                     <button type="button" class="bs-modal delete-bill btn btn-danger btn-sm" 
-                                    data-form-url="{% url 'bill-delete' bill.pk %}">
+                                    data-form-url="{% url 'recive-delete' recive.pk %}">
                                     <span class="">حذف</span>
                                     </button>
-                                    <a href='{% url 'farebill-create' bill.pk %}' class=" btn btn-info btn-sm">ثبت کرایه خط</a>
-                                    <a href='{% url 'recive-create' bill.pk %}' class=" btn btn-info btn-sm">ثبت مصول</a>
-                                   {% comment %} <button type="button" id="create-farebill" class="delete-bill btn btn-danger btn-sm" 
-                                    data-form-url="{% url 'bill-delete' bill.pk %}">
-                                    <span class="">>ثبت کرایه خط</span>
-                                    </button> {% endcomment %}
                                 </td>
                                 </tr> 
                                 {% endfor %}               

@@ -9,8 +9,8 @@ from bootstrap_modal_forms.generic import (
     BSModalCreateView,
 )
 
-from .models import Consignee, Commissionaire, BillofLading, FareBill
-from .forms import BillForm, FareBillForm, ConsigneeForm
+from .models import Consignee, Commissionaire, BillofLading, FareBill, Recive
+from .forms import BillForm, FareBillForm, ConsigneeForm, CommissionaireForm, ReciveForm
 
 
 def home(request):
@@ -114,7 +114,7 @@ class FareBillDeleteView(BSModalDeleteView):
 
 class FareBillDetailView(DetailView):
     model = FareBill
-    template_name = 'company/bill_detail.html'
+    template_name = 'company/farebill_detail.html'
     context_object_name = 'farebill'
 
 
@@ -148,6 +148,96 @@ class ConsigneeDeleteView(BSModalDeleteView):
 
 
 class ConsigneeDetailView(DetailView):
-    model = Consignee
+    model = FareBill
+    template_name = 'company/farebill_detail.html'
+    context_object_name = 'farebill'
+
+
+class CommissionaireCreateView(SuccessMessageMixin, CreateView):
+    model = Commissionaire
+    template_name = 'company/commissionaire_create.html'
+    form_class = CommissionaireForm
+    success_url = reverse_lazy('commissionaire-create')
+    success_message = 'موفقانه ثبت کردید'
+
+
+class CommissionaireListView(ListView):
+    model = Commissionaire
+    template_name = 'company/commissionaires_list.html'
+    context_object_name = 'commissionaires'
+
+
+class CommissionaireUpdateView(SuccessMessageMixin, UpdateView):
+    model = Commissionaire
+    template_name = 'company/commissionaire_create.html'
+    form_class = CommissionaireForm
+    success_url = reverse_lazy('commissionaires-list')
+    success_message = 'موفقانه اپدیت کردید'
+
+
+class CommissionaireDeleteView(BSModalDeleteView):
+    model = Commissionaire
+    template_name = 'company/modals/commissionaire_delete.html'
+    success_url = reverse_lazy('commissionaires-list')
+    success_message = 'موفقانه حذف کردید'
+
+
+class CommissionaireDetailView(DetailView):
+    model = Commissionaire
+    template_name = 'company/bill_detail.html'
+    context_object_name = 'farebill'
+
+
+class ReciveCreateView(CreateView):
+    model = Recive
+    template_name = 'company/recive_create.html'
+    form_class = ReciveForm
+    success_url = reverse_lazy('recive-create')
+    success_message = 'موفقانه ثبت کردید'
+
+    def post(self, *args, **kwargs):
+        form = ReciveForm(self.request.POST)
+        if form.is_valid():
+            i_number = form.cleaned_data.get('i_number')
+            taliban_expenses = form.cleaned_data.get('taliban_expenses')
+            eslam_qala_expenses = form.cleaned_data.get('eslam_qala_expenses')
+            bascol_expenses = form.cleaned_data.get('bascol_expenses')
+            bill = kwargs['pk']
+            bill_instance = BillofLading.objects.get(id=bill)
+            recive = Recive(
+                bill=bill_instance,
+                i_number=i_number,
+                taliban_expenses=taliban_expenses,
+                eslam_qala_expenses=eslam_qala_expenses,
+                bascol_expenses=bascol_expenses,
+            )
+            recive.save()
+            messages.success(self.request, 'محصول موفقانه ثبت کردید')
+            return redirect('bills-list')
+
+
+class ReciveListView(ListView):
+    model = Recive
+    template_name = 'company/recives_list.html'
+    context_object_name = 'recives'
+
+
+class ReciveUpdateView(SuccessMessageMixin, UpdateView):
+    model = Recive
+    template_name = 'company/recive_create.html'
+    form_class = ReciveForm
+    success_url = reverse_lazy('recives-list')
+    success_message = 'موفقانه اپدیت کردید'
+
+
+class ReciveDeleteView(BSModalDeleteView):
+    model = Recive
+    template_name = 'company/modals/recive_delete.html'
+    success_url = reverse_lazy('recives-list')
+    success_message = 'موفقانه حذف کردید'
+
+
+class ReciveDetailView(DetailView):
+    model = Recive
     template_name = 'company/bill_detail.html'
     context_object_name = 'farebill'
