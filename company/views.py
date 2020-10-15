@@ -416,8 +416,3 @@ class AccountDeleteView(BSModalDeleteView):
     template_name = 'company/account_modal/delete_account.html'
     success_message = 'معامله موفقانه حذف شد'
     success_url = reverse_lazy('accounts-list')
-
-
-def add_new_function(request):
-    print("thisi si skdjf")
-    print("thisi si skdjf")
