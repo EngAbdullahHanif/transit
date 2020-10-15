@@ -85,6 +85,12 @@ class FareBill(models.Model):
     def __str__(self):
         return self.bill.bill_number
 
+    @property
+    def total_expenses(self):
+        total = self.porterage_expenses + self.invoice_copy + \
+            self.commission_fee + self.custom_expenses + self.rent
+        return total
+
 
 class Recive(models.Model):
     bill = models.ForeignKey(
@@ -96,6 +102,12 @@ class Recive(models.Model):
 
     def __str__(self):
         return self.billoflading.bill_number
+
+    @property
+    def total_expenses(self):
+        total = self.taliban_expenses + self.eslam_qala_expenses + \
+            self.bascol_expenses
+        return total
 
 
 class Account(models.Model):

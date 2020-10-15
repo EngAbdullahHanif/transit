@@ -2,8 +2,12 @@ from django.urls import path
 
 from company.views import(
     home, BillCreateView, BillListView, BillUpdateView, BillDeleteView, BillDetailView,
-    FareBillCreateView, FareBillListView, FareBillDetailView, FareBillUpdateView, FareBillDeleteView, ConsigneeCreateView, ConsigneeListView, ConsigneeUpdateView, ConsigneeDeleteView,
-    CommissionaireCreateView, CommissionaireListView, CommissionaireUpdateView, CommissionaireDeleteView, ReciveCreateView, ReciveListView, ReciveUpdateView, ReciveDeleteView,
+    FareBillCreateView, FareBillListView, FareBillDetailView, FareBillUpdateView, FareBillDeleteView,
+    ConsigneeCreateView, ConsigneeListView, ConsigneeUpdateView, ConsigneeDeleteView, Consignee_bills_detail, Consignee_account_detail,
+    CommissionaireCreateView, CommissionaireListView, CommissionaireUpdateView, CommissionaireDeleteView,
+    ReciveCreateView, ReciveListView, ReciveUpdateView, ReciveDeleteView,
+    AccountCreateView, AccountDeleteView, AccountListView, AccountUpdateView,
+    consignee_report,
 )
 
 urlpatterns = [
@@ -29,8 +33,14 @@ urlpatterns = [
     path('consignees', ConsigneeListView.as_view(), name='consignees-list'),
     path('consignee/<int:pk>/update', ConsigneeUpdateView.as_view(),
          name='consignee-update'),
-    path('consignee/<int:pk>', ConsigneeDeleteView.as_view(),
+    path('consignee/<int:pk>/delete', ConsigneeDeleteView.as_view(),
          name='consignee-delete'),
+    path('consignee/<int:pk>/bills', Consignee_bills_detail,
+         name='consignee-bills-detail'),
+    path('consignee/<int:pk>/account', Consignee_account_detail,
+         name='consignee-accounts-detail'),
+
+    path('consignee/report', consignee_report, name='consignee-report'),
 
 
     path('commissionaire', CommissionaireCreateView.as_view(),
@@ -49,5 +59,11 @@ urlpatterns = [
     path('recive/<int:pk>/delete', ReciveDeleteView.as_view(), name='recive-delete'),
 
 
+    path('accounts/', AccountListView.as_view(), name='accounts-list'),
+    path('account/rceate', AccountCreateView.as_view(), name='account-create'),
+    path('accounts/<int:pk>/update',
+         AccountUpdateView.as_view(), name='account-update'),
+    path('accounts/<int:pk>/delete',
+         AccountDeleteView.as_view(), name='account-delete'),
 
 ]

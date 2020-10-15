@@ -2,7 +2,7 @@ from django.forms import ModelForm
 from django import forms
 from bootstrap_modal_forms.forms import BSModalModelForm
 
-from .models import Consignee, Commissionaire, BillofLading, FareBill, Recive
+from .models import Consignee, Commissionaire, BillofLading, FareBill, Recive, Account
 
 
 class BillForm(ModelForm):
@@ -87,3 +87,23 @@ class ReciveForm(ModelForm):
             'eslam_qala_expenses',
             'bascol_expenses',
         ]
+
+
+class AccountModelForm(BSModalModelForm):
+    recieve_date = forms.DateField(
+        error_messages={
+            'invalid': 'لطفا به فارمت DD/MM/YYYY تاریخ وارد کنید.'},
+        widget=forms.TextInput(
+            attrs={'type': 'date'}),
+        label='تاریخ رسید '
+    )
+
+    class Meta:
+        model = Account
+        fields = ['consignee', 'recieve_date', 'amount']
+        error_messages = {
+            'consignee': {'required': 'مشتری الزامی میباشد'},
+            'amount': {
+                'required': 'مقدار الزامی میباشد.',
+                'min_vlaue': 'مقدار باید صفر یا از صفر بزرکتر باشد'}
+        }

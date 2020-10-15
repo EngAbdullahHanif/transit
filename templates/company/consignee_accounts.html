@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% block title %}
+  حسابات
+{% endblock title %}
+{% load static %}
+{% load crispy_forms_tags %} 
+{% block content %}
+<div class="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <h5 class="m-0 text-center">
+                               لست تمامي حسابهای {{consignee.name}} 
+                            </h5>
+                        </div>
+                        <!-- end col -->
+                    </div>
+                <!-- end row -->
+                </div>
+                <!-- end page-title-box -->
+            </div>
+        </div>
+        <!-- end page title -->
+
+
+        <!-- start row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card m-b-30">
+                    <div class="card-body col-lg-12">
+                        <div class="row">
+                            <div class="col-6">
+                                <h6>مجموع مصارف کرایه خط: {{ farebill_total_amount|floatformat:0 }} <small style="font-size: 14px;">افغانی</small></h6>
+                            </div>
+                            <div class="col-6">
+                                <h6>مجموع مصارف محصول: {{ recive_total_amount|floatformat:0 }} <small style="font-size: 14px;">افغانی</small></h6>
+                            </div>
+                            {% comment %} <div class="col-4">
+                                <h6>مجموع باقی مانده: {{ total_remaind_amount|floatformat:0 }} <small style="font-size: 14px;">افغانی</small></h6>
+                            </div> {% endcomment %}
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <h6>مجموع پرداخت شده: {{ total_recived_amount|floatformat:0 }} <small style="font-size: 14px;">افغانی</small></h6>
+                            </div>
+                            <div class="col-6">
+                                <h6>مجموع باقی مانده:  {{ total_remaind_amount|floatformat:0 }} <small style="font-size: 14px;">افغانی</small> </h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end col -->
+        </div>
+        <!-- end row -->
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card m-b-30">
+                    <div class="card-body">
+                        <h4 class="mt-0 text-center">
+                        لست عمومی
+                        </h4>
+                        <table
+                        id="datatable"
+                        class="table table-bordered dt-responsive nowrap"
+                        style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                                <tr>
+                                <th>#</th>
+                                <th>تاریخ</th>  
+                                <th>مقدار پرداخت شده</th>
+                                <!-- <th>خواندن/ اپدیت / حذف</th> -->
+                                <th style="border-right: solid rgb(231, 230, 230) 1.4px;">عملیات </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {% for account in accounts %}
+                                <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ account.recieve_date }}</td>
+                                <td>{{ account.amount }}</td>
+                                <td class="text-center">
+                                    <!-- Update bill buttons -->
+                                    <a href="{% url 'account-update' account.pk %}" class=" btn btn-info btn-sm">
+                                    <span class="">اپدیت</span>
+                                    </a>
+                                    <!-- Delete bill buttons -->
+                                    <button type="button" class="bs-modal delete-bill btn btn-danger btn-sm" 
+                                    data-form-url="{% url 'account-delete' account.pk %}">
+                                    <span class="">حذف</span>
+                                    </button>
+                                   {% comment %} <button type="button" id="create-farebill" class="delete-bill btn btn-danger btn-sm" 
+                                    data-form-url="{% url 'bill-delete' bill.pk %}">
+                                    <span class="">>ثبت کرایه خط</span>
+                                    </button> {% endcomment %}
+                                </td>
+                                </tr> 
+                                {% endfor %}               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- end col -->
+        </div>
+        <!-- end row -->
+
+        
+        
+    </div>
+    <!-- container fluid -->
+</div>
+<!-- Page content Wrapper -->
+
+</div>
+<!-- content -->
+
+        
+{% endblock content %}
+{% block extra_script %}
+<script src="{% static 'assets/js/custom.js' %}"></script>
+{% endblock extra_script %}

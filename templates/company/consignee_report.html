@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% block title %}
+  راپور
+{% endblock title %}
+{% load crispy_forms_tags %} 
+{% block content %}
+  <div class="page-content-wrapper">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="page-title-box">
+            <div class="row align-items-center">
+              <div class="col-md-12">
+                <h5 class="m-0 text-center">
+                   راپورها
+                </h5>
+              </div>
+              <!-- end col -->
+              
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- end page-title-box -->
+        </div>
+      </div>
+      <!-- end page title -->
+
+      <!-- Page main content starts -->
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card m-b-30">
+            <div class="card-body col-lg-12">
+              <form class="" action="{% url 'consignee-report' %}" method="post">
+                  {% csrf_token %} 
+                <!-- Row starts -->
+                <div class="form-row">
+                    <div class="form-group col-md-3 col-lg-3">
+                        <label for="minDate">نام صاحب مال</label>
+                        <select name="consignee" class="select form-control" id="id_consignee">
+                        <option value="" selected="">---------</option>
+                        {% for consignee in consignees %}
+                            <option value="{{ consignee.name }}">{{ consignee.name }}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3 col-lg-3">
+                        <label for="maxDate">نوعیت جنس</label>
+                        <input type="text" class="form-control" name="commodity" id="maxDate" placeholder="نوعیت جنس ">
+                    </div>
+                    <div class="form-group col-md-3 col-lg-3">
+                        <label for="minDate">از تاریخ</label>
+                        <input type="date" class="form-control" name="min_date" id="minDate" placeholder="از تاریخ">
+                    </div>
+                    <div class="form-group col-md-3 col-lg-3">
+                        <label for="maxDate">ایلا تاریخ</label>
+                        <input type="date" class="form-control" name="max_date" id="maxDate" placeholder="ایلا تاریخ">
+                    </div>
+                </div>
+                <!-- Row Ends -->
+
+
+
+                <!-- Row starts -->
+                <div class="row m-t-15"></div>
+                <!-- Row Ends -->
+                <div class="form-group float-right">
+                  <div>
+                    <button
+                      type="submit"
+                      class="btn btn-primary waves-effect waves-light"
+                    >
+                      ارسال
+                    </button>
+                    <button
+                      type="reset"
+                      class="btn btn-secondary waves-effect m-l-5"
+                    >
+                      لغو
+                    </button>
+                    
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- end col -->
+      </div>
+      <!-- Page main content ends -->
+      <!-- end row -->
+
+      <div class="row">
+            <div class="col-lg-12">
+                <div class="card m-b-30">
+                    <div class="card-body">
+                        <h4 class="mt-0 text-center">
+                        لست عمومی
+                        </h4>
+                        <table
+                        id="datatable"
+                        class="table table-bordered dt-responsive nowrap"
+                        style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                                <tr>
+                                <th>#</th>
+                                <th>نام</th>  
+                                <!-- <th>خواندن/ اپدیت / حذف</th> -->
+                                <th style="border-right: solid rgb(231, 230, 230) 1.4px;">عملیات </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {% for bill in bills %}
+                                <tr>
+                                <td>{{ forloop.counter }}</td>
+                                {% for recive in bill.recive_set.all %}
+                                    <td>{{ recive.i_number }}</td>
+                                    <td>{{ recive.taliban_expenses }}</td>
+                                {% endfor %}
+                                </tr> 
+                                {% endfor %}               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- end col -->
+        </div>
+    </div>
+    <!-- container fluid -->
+  </div>
+  <!-- Page content Wrapper -->
+</div>
+<!-- content -->
+
+
+{% endblock content %}
+
+
+{% block formset_scripts %}
+<!-- !FORMSET SCRIPTS -->
+{% comment %} <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> {% endcomment %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.formset/1.2.2/jquery.formset.js"></script>
+<script type="text/javascript">
+  $(".formset_row").formset({
+    addText: '<span class="btn btn-primary btn-block""> اضافه کردن اجناس</span>',
+    deleteText: '<span class="btn btn-danger btn-block"  > حذف کردن</span> ',
+    prefix: "items_set",
+  });
+
+  $(".alert")
+      .fadeTo(5000, 500)
+      .slideUp(500, function () {
+        $(".alert").slideUp(500);
+      });
+
+</script>
+{% endblock formset_scripts %}
+
+
+
+
+        
+            <label for="id_consignee" class=" requiredField">
+                صاحب مال<span class="asteriskField">*</span>
+            </label>
+                <div class="">
+                    
+                </div>
+            
+        
+    

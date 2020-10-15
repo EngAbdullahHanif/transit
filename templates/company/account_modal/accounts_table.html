@@ -1,0 +1,69 @@
+<div class="page-content-wrapper">
+    <div class="container-fluid">
+        
+        <!-- end page title -->
+
+        <!-- Page main content starts -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card m-b-30">
+                    <div class="card-body">
+                        <h4 class="mt-0 text-center">
+                        پرداخت عمومی
+                        </h4>
+                        <table
+                        id="datatable"
+                        class="table table-bordered dt-responsive nowrap"
+                        style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                                <tr>
+                                <th>#</th>
+                                <th>نام شرکت</th>
+                                <th>تاریخ</th>
+                                <th>مقدار پرداخت</th>
+                                <!-- <th>خواندن/ اپدیت / حذف</th> -->
+                                <th style="border-right: solid rgb(231, 230, 230) 1.4px;">عملیات </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {% for account in accounts %}
+                                <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ account.consignee.name }}</td>
+                                <td class="">{{ account.recieve_date }}</td>
+                                <td>{{ account.amount }}</td>
+                                <td class="text-center">
+                                    <!-- Read account buttons -->
+                                    <button type="button" class="bs-modal read-account btn btn-primary btn-sm"
+                                    data-form-url="">
+                                    <span class="">جزیات</span>
+                                    </button>
+                                    <!-- Update account buttons -->
+                                    <button type="button" class="update-account btn btn-info btn-sm" data-form-url="{% url 'account-update' account.pk %}">
+                                    <span class="">اپدیت</span>
+                                    </button>
+                                    <!-- Delete account buttons -->
+                                    <button type="button" class="bs-modal delete-account btn btn-danger btn-sm" 
+                                    data-form-url="{% url 'account-delete' account.pk %}">
+                                    <span class="">حذف</span>
+                                    </button>
+                                </td>
+                                </tr> 
+                                {% endfor %}               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- end col -->
+        </div>
+        <!-- Page main content ends -->
+
+        <!-- end row -->
+    </div>
+    <!-- container fluid -->
+    </div>
+    <!-- Page content Wrapper -->
+</div>
+<!-- content -->

@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'widget_tweaks',
 
     'company',
+    'properties',
+    'expenses',
 
 ]
 

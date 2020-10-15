@@ -58,11 +58,17 @@
                                 <td>{{ consignee.phone_number }}</td>
                                 <td class="text-center">
                                     <!-- Read bill buttons -->
-                                    <a href="{% url 'bill-detail' consignee.pk %}" class="btn btn-info btn-sm">
+                                    <a href="{% url 'consignee-bills-detail' consignee.pk %}" class=" btn btn-info btn-sm">
+                                    <span class="">بارنامها و کرایه خطها</span>
+                                    </a>
+                                    <a href="{% url 'consignee-accounts-detail' consignee.pk %}" class=" btn btn-info btn-sm">
+                                    <span class="">حسابات</span>
+                                    </a>
+                                    <a href="{% url 'bill-detail' consignee.pk %}" class="btn btn-primary btn-sm">
                                     <span class="">جزیات</span>
                                     </a>
                                     <!-- Update bill buttons -->
-                                    <a href="{% url 'consignee-update' consignee.pk %}" class=" btn btn-info btn-sm">
+                                    <a href="{% url 'consignee-update' consignee.pk %}" class=" btn btn-primary btn-sm">
                                     <span class="">اپدیت</span>
                                     </a>
                                     <!-- Delete bill buttons -->

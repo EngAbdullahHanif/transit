@@ -64,6 +64,7 @@
                                 <th>انوایس</th>
                                 <th>کمیشن</th>
                                 <th>مصارف کمرک</th>
+                                <th>مجوعه</th>
                                 <!-- <th>خواندن/ اپدیت / حذف</th> -->
                                 <th style="border-right: solid rgb(231, 230, 230) 1.4px;">عملیات </th>
                                 </tr>
@@ -80,6 +81,7 @@
                                 <td>{{ farebill.invoice_copy }}</td>
                                 <td>{{ farebill.commission_fee }}</td>
                                 <td>{{ farebill.custom_expenses }}</td>
+                                <td>{{ farebill.total_expenses }}</td>
                                 <td class="text-center">
                                     <!-- Read bill buttons -->
                                     <a href="{% url 'farebill-detail' farebill.pk %}" class="btn btn-info btn-sm">

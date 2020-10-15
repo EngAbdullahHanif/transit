@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block title %}
+  مصارف
+{% endblock title %}
+{% load crispy_forms_tags %} 
+{% block content %}
+<div class="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <h5 class="m-0 text-center">
+                                به صفحه مصارف خوش امدید
+                            </h5>
+                        </div>
+                        <!-- end col -->
+                    </div>
+                <!-- end row -->
+                </div>
+                <!-- end page-title-box -->
+            </div>
+        </div>
+        <!-- end page title -->
+
+         <!-- Page main content starts -->
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card m-b-30">
+            <div class="card-body col-lg-12">
+              <form class="" action="" method="post">
+                  {% csrf_token %} 
+                <!-- Row starts -->
+                <div class="row m-t-30">
+                  <div class="form-group col-lg-4">
+                    {{ form.description|as_crispy_field }}
+                  </div>
+                  <div class="form-group col-lg-4">
+                    {{form.price|as_crispy_field }}
+                  </div>
+                  <div class="form-group col-lg-4">
+                    {{ form.purchase_date|as_crispy_field }}
+                  </div>
+                </div>
+                <!-- Row Ends -->
+
+                <!-- Row starts -->
+                <div class="row m-t-15"></div>
+                <!-- Row Ends -->
+                <div class="form-group float-right">
+                  <div>
+                    <button
+                      type="submit"
+                      class="btn btn-primary waves-effect waves-light"
+                    >
+                      ارسال
+                    </button>
+                    <button
+                      type="reset"
+                      class="btn btn-secondary waves-effect m-l-5"
+                    >
+                      لغو
+                    </button>
+                    
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- end col -->
+      </div>
+      <!-- Page main content ends -->
+        <!-- end row -->
+    </div>
+    <!-- container fluid -->
+</div>
+<!-- Page content Wrapper -->
+
+</div>
+<!-- content -->
+
+        
+{% endblock content %}
+
+{% block formset_scripts %}
+
+<script type="text/javascript">
+
+  $(".alert")
+      .fadeTo(5000, 500)
+      .slideUp(500, function () {
+        $(".alert").slideUp(500);
+      });
+
+</script>
+{% endblock formset_scripts %}
+
+
+

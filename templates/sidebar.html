@@ -52,7 +52,7 @@
           <ul class="list-unstyled">
             <li><a href="{% url 'consignees-list' %}">لست مشتریان </a></li>
             <li><a href="{% url 'consignee-create' %}">ثبت مشتری جدید</a></li>
-            <li><a href="">گزارشات</a></li>
+            <li><a href="{% url 'consignee-report' %}">گزارشات</a></li>
           </ul>
         </li>
 
@@ -75,8 +75,7 @@
               ><i class="mdi mdi-chevron-right"></i></span
           ></a>
           <ul class="list-unstyled">
-            <li><a href="">حسابات رسیده</a></li>
-            <li><a href="">پرداخت حساب جدید</a></li>
+            <li><a href="{% url 'accounts-list' %}">حسابات رسیده</a></li>
             <li><a href="">گزارشات</a></li>
           </ul>
         </li>
@@ -88,8 +87,8 @@
               ><i class="mdi mdi-chevron-right"></i></span
           ></a>
           <ul class="list-unstyled">
-            <li><a href="">لست مصارف روزانه</a></li>
-            <li><a href=""> ثبت مصارف روزانه</a></li>
+            <li><a href="{% url 'items-list' %}">لست مصارف روزانه</a></li>
+            <li><a href="{% url 'item-create' %}"> ثبت مصارف روزانه</a></li>
             <li><a href="">گزارشات</a></li>
           </ul>
         </li>
@@ -100,9 +99,9 @@
               ><i class="mdi mdi-chevron-right"></i></span
           ></a>
           <ul class="list-unstyled">
-            <li><a href="">نمایش دارایها</a></li>
+            <li><a href="{% url 'property-items-list' %}">نمایش دارایها</a></li>
             <li>
-              <a href=""> ثبت دارایها </a>
+              <a href="{% url 'property-item-create' %}"> ثبت دارایها </a>
             </li>
           </ul>
         </li>

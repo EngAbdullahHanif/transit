@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% block title %}
+  دارای ها
+{% endblock title %}
+{% load crispy_forms_tags %} 
+{% block content %}
+{% include 'company/account_modal/modal_body.html' %}
+<div class="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <h5 class="m-0 text-center">
+                                صفحه دارای ها
+                            </h5>
+                        </div>
+                        <!-- end col -->
+                    </div>
+                <!-- end row -->
+                </div>
+                <!-- end page-title-box -->
+            </div>
+        </div>
+        <!-- end page title -->
+
+        <!-- Page main content starts -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card m-b-30">
+                    <div class="card-body">
+                        <h4 class="mt-0 text-center">
+                        </h4>
+                        <table
+                        id="datatable"
+                        class="table table-bordered dt-responsive nowrap"
+                        style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                                <tr>
+                                <th>#</th>
+                                <th>توضحات</th>
+                                <th>قیمت</th>
+                                <th>تعداد</th>
+                                <th>موقعیت</th>
+                                <th>حالت فعلی</th>
+                                <th>تاریخ خرید</th>
+                                <th style="border-right: solid rgb(231, 230, 230) 1.4px;">عملیات </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {% for item in items %}
+                                <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ item.description }}</td>
+                                <td>{{ item.price }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>{{ item.location }}</td>
+                                <td>{{ item.get_status_display }}</td>
+                                <td>{{ item.purchase_date }}</td>
+                                <td class="text-center">
+                                    <!-- Update account buttons -->
+                                    <a href="{% url 'property-item-update' item.pk %}" class=" btn btn-info btn-sm">
+                                    <span class="">اپدیت</span>
+                                    </a>
+                                    <!-- Delete account buttons -->
+                                    <button type="button" class="bs-modal delete-account btn btn-danger btn-sm" \
+                                     data-form-url="{% url 'property-item-delete' item.pk %}">
+                                    <span class="">حذف</span>
+                                    </button>
+                                </td>
+                                </tr> 
+                                {% endfor %}               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- end col -->
+        </div>
+        <!-- Page main content ends -->
+        <!-- end row -->
+    </div>
+    <!-- container fluid -->
+</div>
+<!-- Page content Wrapper -->
+
+</div>
+<!-- content -->
+
+        
+{% endblock content %}
+
+
+{% block modal_scripts %}
+<script type="text/javascript">
+  $(function () {
+
+    
+
+
+    // Read and Delete account buttons open modal with id="modal"
+    // The formURL is retrieved from the data of the element
+    $(".bs-modal").each(function () {
+      $(this).modalForm({ formURL: $(this).data("form-url") });
+    });
+
+    // Hide message
+    $(".alert")
+      .fadeTo(5000, 500)
+      .slideUp(500, function () {
+        $(".alert").slideUp(500);
+      });
+  });
+</script>
+{% endblock modal_scripts %}

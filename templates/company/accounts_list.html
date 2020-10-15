@@ -1,0 +1,121 @@
+{% extends 'base.html' %} 
+{% block title %}
+  حسابات
+{% endblock title %}
+{% load static %}
+{% block content %} 
+{% include 'company/account_modal/modal_body.html' %}
+<div class="container mt-3">
+  <div class="row align-items-center">
+        <div class="col-md-12">
+        <h5 class="m-0 text-center">
+            این جدول پرداخت های عمومی مشتریان می باشد
+        </h5>
+        </div>
+        <!-- end col -->
+    </div>
+  <div class="row">
+      <div class="row">
+        <div class=" my-5 col-12">
+        <form action="."  method="GET">
+          <div class="form-row">
+            <div class="form-group col-md-3 col-lg-3">
+                <label for="minDate">از تاریخ</label>
+                <input type="date" class="form-control" name="min_date" id="minDate" placeholder="از تاریخ">
+            </div>
+            <div class="form-group col-md-3 col-lg-3">
+                <label for="maxDate">ایلا تاریخ</label>
+                <input type="date" class="form-control" name="max_date" id="maxDate" placeholder="ایلا تاریخ">
+            </div> 
+              <div class="form-group col-md-6 col-lg-6 ">
+                <button
+                  id="create-account"
+                  type="button"
+                  class="btn btn-info btn-lg my-3"
+                  type="button"
+                  name="button"
+                  style="float:left"
+                >
+                  رسید پول &nbsp;
+                  <i class="mdi mdi-plus"></i>
+                </button>
+              </div>
+            </div>
+          <button type="submit" class=" btn btn-primary ">جستجو</button>
+        </form>
+      </div>
+    {% comment %} <div class="col"> {% endcomment %}
+        <div class="col-12 mb-3">
+          {% if accounts %}
+          {% include "company/account_modal/accounts_table.html"%}
+          {% else %}
+          <p class="no-accounts text-primary">تا هنوز کدام پول پرداخت نه شده</p>
+          {% endif %}
+        </div>
+      {% comment %} </div> {% endcomment %}
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+{% block extra_script %}
+  
+<script src="{% static 'assets/js/custom.js' %}"></script>
+{% endblock extra_script %}
+{% block modal_scripts %}
+<script type="text/javascript">
+  $(function () {
+    // Create account button opens modal with id="create-modal"
+    $("#create-account").modalForm({
+      formURL: "{% url 'account-create' %}",
+      modalID: "#create-modal",
+    });
+
+    var asyncSuccessMessage = [
+      "<div ",
+      "style='position:fixed;top:0;z-index:10000;width:100%;border-radius:0;' ",
+      "class='alert alert-icon alert-success alert-dismissible fade show mb-0' role='alert'>",
+      "Success: account was updated.",
+      "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>",
+      "<span aria-hidden='true'>&times;</span>",
+      "</button>",
+      "</div>",
+      "<script>",
+      "$('.alert').fadeTo(2000, 500).slideUp(500, function () {$('.alert').slideUp(500).remove();});",
+      "<\/script>",
+    ].join("");
+
+    function updateaccountModalForm() {
+      $(".update-account").each(function () {
+        $(this).modalForm({
+          formURL: $(this).data("form-url"),
+          asyncUpdate: true,
+          asyncSettings: {
+            closeOnSubmit: true,
+            successMessage: asyncSuccessMessage,
+            dataUrl: "accounts/",
+            dataElementId: "#accounts-table",
+            dataKey: "table",
+            addModalFormFunction: updateaccountModalForm,
+          },
+        });
+      });
+    }
+    updateaccountModalForm();
+
+    // Read and Delete account buttons open modal with id="modal"
+    // The formURL is retrieved from the data of the element
+    $(".bs-modal").each(function () {
+      $(this).modalForm({ formURL: $(this).data("form-url") });
+    });
+
+    // Hide message
+    $(".alert")
+      .fadeTo(5000, 500)
+      .slideUp(500, function () {
+        $(".alert").slideUp(500);
+      });
+  });
+</script>
+{% endblock modal_scripts %}
