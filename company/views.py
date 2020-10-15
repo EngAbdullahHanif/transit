@@ -217,7 +217,7 @@ def is_valid_query_param(param):
 def consignee_report(request):
     consignees = Consignee.objects.all()
     accounts = Account.objects.all()
-    bills = []  
+    bills = []
     if request.method == 'POST':
         consignee_name = request.POST.get('consignee')
         consignee = Consignee.objects.get(name__icontains=consignee_name)
@@ -416,3 +416,7 @@ class AccountDeleteView(BSModalDeleteView):
     template_name = 'company/account_modal/delete_account.html'
     success_message = 'معامله موفقانه حذف شد'
     success_url = reverse_lazy('accounts-list')
+
+
+def add_new_function(request):
+    print("thisi si skdjf")
