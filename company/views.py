@@ -420,3 +420,4 @@ class AccountDeleteView(BSModalDeleteView):
 
 def add_new_function(request):
     print("thisi si skdjf")
+    print("thisi si skdjf")
