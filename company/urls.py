@@ -1,7 +1,7 @@
 from django.urls import path
 
 from company.views import(
-    home, BillCreateView, BillListView, BillUpdateView, BillDeleteView, BillDetailView,
+    HomeView, BillCreateView, BillListView, BillUpdateView, BillDeleteView, BillDetailView,
     FareBillCreateView, FareBillListView, FareBillDetailView, FareBillUpdateView, FareBillDeleteView,
     ConsigneeCreateView, ConsigneeListView, ConsigneeUpdateView, ConsigneeDeleteView, Consignee_bills_detail, Consignee_account_detail,
     CommissionaireCreateView, CommissionaireListView, CommissionaireUpdateView, CommissionaireDeleteView,
@@ -11,7 +11,7 @@ from company.views import(
 )
 
 urlpatterns = [
-    path('', home, name='home'),
+    path('', HomeView.as_view(), name='home'),
     path('bill', BillCreateView.as_view(), name='bill-create'),
     path('bills', BillListView.as_view(), name='bills-list'),
     path('bill/<int:pk>/update', BillUpdateView.as_view(), name='bill-update'),

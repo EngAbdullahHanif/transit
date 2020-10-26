@@ -94,8 +94,8 @@
                                     data-form-url="{% url 'bill-delete' bill.pk %}">
                                     <span class="">حذف</span>
                                     </button>
-                                    <a href='{% url 'farebill-create' bill.pk %}' class=" btn btn-info btn-sm">ثبت کرایه خط</a>
-                                    <a href='{% url 'recive-create' bill.pk %}' class=" btn btn-info btn-sm">ثبت مصول</a>
+                                    <a href='{% url 'farebill-create' bill.pk %}'  class=" btn btn-info btn-sm">ثبت کرایه خط</a>
+                                    <a href='#' class=" btn btn-info btn-sm" id="farebill-{{ bill.pk }}" data-farebill-id="{{ bill.pk }}">ثبت مصول</a>
                                    {% comment %} <button type="button" id="create-farebill" class="delete-bill btn btn-danger btn-sm" 
                                     data-form-url="{% url 'bill-delete' bill.pk %}">
                                     <span class="">>ثبت کرایه خط</span>
@@ -105,6 +105,7 @@
                                 {% endfor %}               
                             </tbody>
                         </table>
+                        <button onclick="create_pdf()">printpdf</button>
                     </div>
                 </div>
             </div>
@@ -132,9 +133,13 @@
   $(function () {
 
     // Create bill button opens modal with id="create-modal"
-      $("#create-farebill").modalForm({
-        formURL: $(this).data("form-url"),
+      $("#farebill").modalForm({
+        formURL: $(this).data("farebill-id"),
         modalID: "#create-modal",
+      });
+
+      $("#farebill-1").click(function () {
+        console.log($(this).attr("data-farebill-id"));
       });
 
     var asyncSuccessMessage = [
@@ -182,6 +187,26 @@
         $(".alert").slideUp(500);
       });
   });
+
+  function create_pdf(){
+
+    var doc = new jsPDF()
+
+    doc.autoTable({ html: '#datatable' });
+    //doc.addFileToVFS("{% static 'assets/font/IRANSansWeb_Light.ttf' %}", 'IRANSans');
+    //doc.setFont('IRANSans')
+
+    let myFont = 'static_files/assets/font/IRANSansWeb_Light.ttf'; // load the *.ttf font file as binary string
+
+    // add the font to jsPDF
+    doc.addFileToVFS("IRANSansWeb_Light.ttf", myFont);
+    doc.addFont("IRANSansWeb_Light.ttf", "MyFont", "normal");
+      
+    doc.setFontSize(10);
+
+    doc.save('table.pdf')
+  }
+
 </script>
 
 {% endblock modal_scripts %}

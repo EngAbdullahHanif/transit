@@ -1,7 +1,9 @@
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views import generic
+from django.views.generic import TemplateView
 from django.views.generic import CreateView, ListView, UpdateView, DetailView
 from django.urls import reverse_lazy
 
@@ -18,8 +20,12 @@ from .forms import (
 )
 
 
-def home(request):
-    return render(request, 'home.html')
+# def home(request):
+#     return render(request, 'home.html')
+
+
+class HomeView(LoginRequiredMixin, TemplateView):
+    template_name = 'home.html'
 
 
 class BillCreateView(SuccessMessageMixin, CreateView):

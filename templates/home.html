@@ -6,6 +6,7 @@
 
 
 {% block content %}
+{% load static %}
 
 <div class="page-content-wrapper ">
     <div class="container-fluid">
@@ -14,7 +15,7 @@
                 <div class="page-title-box">
                     <div class="row align-items-center">
                         <div class="col-md-12">
-                            <h4 class="text-center m-0 text-muted">خوش آمدید! <br><br>   سیستم مدیریت اطلاعات شرکت ترانزیت </h4>
+                            <h4 class="text-center m-0 text-muted">خوش آمدید! <br><br>   سیستم مدیریت اطلاعات شرکت ترانزیتی و بارچلانی بین المللی میرویس جمیل </h4>
                         </div>
                         <!-- end col -->
                     </div>
@@ -23,6 +24,198 @@
                 <!-- end page-title-box -->
             </div>
         </div>
+        <!--end row-->
+
+
+        <div class="row my-5 ">
+            <div class="col-xl-6">
+                <div class="card m-b-30">
+                    <div class="card-body">
+
+                        <h4 class="mt-0 header-title">راپور هفته </h4>
+                        <p class="text-muted m-b-30 d-inline-block text-truncate w-100">این چارت مجموع کانتینر های رفته، وصولی ها، مجموع پولهای باقي مانده</p>
+
+                        <ul class="list-inline widget-chart m-t-20 m-b-15 text-center">
+                            <li class="list-inline-item">
+                                <h5>30</h5>
+                                <p class="text-muted">مجموع کانتینر ها</p>
+                            </li>
+                            <li class="list-inline-item">
+                                <h5>34232</h5>
+                                <p class="text-muted">مجموع مصارف </p>
+                            </li>
+                            <li class="list-inline-item">
+                                <h5>23442</h5>
+                                <p class="text-muted">مجموع وصولی</p>
+                            </li>
+                        </ul>
+
+                        <div id="animating-donut" class="ct-chart ct-golden-section"></div>
+
+                    </div>
+                </div>
+            </div> <!-- end col -->
+
+            <div class="col-xl-6">
+                <div class="card m-b-30">
+                    <div class="card-body">
+
+                        <h4 class="mt-0 header-title">راپور امروز</h4>
+                        <p class="text-muted m-b-30 d-inline-block text-truncate w-100">این چارت تعدار کانتینرهای اجرا شده، مصارف امروز، مجموع پولهای وصولی را نشان میدهد.
+                        </p>
+
+                        <ul class="list-inline widget-chart m-t-20 m-b-15 text-center">
+                            <li class="list-inline-item">
+                                <h5>4</h5>
+                                <p class="text-muted">کانتینر</p>
+                            </li>
+                            <li class="list-inline-item">
+                                <h5>23978</h5>
+                                <p class="text-muted">مصارف امروز</p>
+                            </li>
+                            <li class="list-inline-item">
+                                <h5>8462</h5>
+                                <p class="text-muted">مجموع وصولی</p>
+                            </li>
+                        </ul>
+
+                        <div id="simple-pie" class="ct-chart ct-golden-section simple-pie-chart-chartist"></div>
+
+                    </div>
+                </div>
+            </div> <!-- end col -->
+        </div> <!-- end row -->
+
+
+        <div class="row">
+            <div class="col-xl-9">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="mt-0 header-title mb-4">آخرین معامله</h4>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">نمبر بارنامه</th>
+                                        <th scope="col">صاحب مال</th>
+                                        <th scope="col">اکت CMR</th>
+                                        <th scope="col">نمبر کانتینر</th>
+                                        <th scope="col">نمبر لاري</th>
+                                        <th scope="col">وزن خالص</th>
+                                        <th scope="col">تاریخ ورود</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">14567</th>
+                                        <td>عبدالله حنیف</td>
+                                        <td>1423</td>
+                                        <td>74234</td>
+                                        <td>2342</td>
+                                        <td>40000</td>
+                                        <td>09/23/2020</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">14568</th>
+                                        <td>طاهر نصیری</td>
+                                        <td>15234</td>
+                                        <td>74234</td>
+                                        <td>2523</td>
+                                        <td>60000</td>
+                                        <td>04/15/2020</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">14569</th>
+                                        <td>متین </td>
+                                        <td>16345</td>
+                                        <td>234234</td>
+                                        <td>34534</td>
+                                        <td>60000</td>
+                                        <td>03/12/2020</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">14570</th>
+                                        <td>جواد</td>
+                                        <td>172342</td>
+                                        <td>11234</td>
+                                        <td>223423</td>
+                                        <td>60000</td>
+                                        <td>03/12/2020</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">14571</th>
+                                        <td>جعفر </td>
+                                        <td>1823423</td>
+                                        <td>23432</td>
+                                        <td>325234</td>
+                                        <td>40000</td>
+                                        <td>05/14/2020</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="mt-0 header-title mb-4">اخرین فایل های ارسال شده</h4>
+                        <table class="table table-striped mb-0">
+                            <tbody>
+                                <tr>
+                                    <td><i class="far fa-file-pdf text-primary h2"></i></td>
+                                    <td>
+                                        <h6 class="mt-0">حاجی زلمی</h6>
+                                        <p class="text-muted mb-0">لست روغنها</p></td>
+                                    <td>
+                                        <a href="#" class="btn btn-primary btn-sm">
+                                            <i class="fas fa-download"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><i class="far fa-file-pdf text-primary h2"></i></td>
+                                    <td>
+                                        <h6 class="mt-0">نادر جان</h6>
+                                        <p class="text-muted mb-0"> ارد و روغنها</p></td>
+                                    <td>
+                                        <a href="#" class="btn btn-primary btn-sm">
+                                            <i class="fas fa-download"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><i class="far fa-file-pdf text-primary h2"></i></td>
+                                    <td>
+                                        <h6 class="mt-0">محمد خان</h6>
+                                        <p class="text-muted mb-0">لست چوکیها</p></td>
+                                    <td>
+                                        <a href="#" class="btn btn-primary btn-sm">
+                                            <i class="fas fa-download"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><i class="far fa-file-pdf text-primary h2"></i></td>
+                                    <td>
+                                        <h6 class="mt-0">حاجی نوید</h6>
+                                        <p class="text-muted mb-0">لست کتابچه ها</p></td>
+                                    <td>
+                                        <a href="#" class="btn btn-primary btn-sm">
+                                            <i class="fas fa-download"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
 
     </div><!-- container fluid -->
 

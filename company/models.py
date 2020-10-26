@@ -34,26 +34,28 @@ class BillofLading(models.Model):
     arrival_date = models.DateField(
         auto_now=False, auto_now_add=False, verbose_name='تاریخ ورودی')
     lading_date = models.DateField(
-        auto_now=False, auto_now_add=False, verbose_name='تاریخ بارکیری')
+        auto_now=False, auto_now_add=False, verbose_name='تاریخ بارکیری', blank=True, null=True)
     exit_date = models.DateField(
         auto_now=False, auto_now_add=False, verbose_name='تاریخ خروج')
     origin_custom = models.CharField(max_length=50, verbose_name='کمرک مبداء')
     destination_custom = models.CharField(
-        max_length=50, verbose_name='کمرک مقصد')
+        max_length=50, verbose_name=' مقصد')
     act_cmr = models.IntegerField(verbose_name='کت )سی-ام-ار(')
     container_number = models.CharField(
         max_length=20, verbose_name='نمبر کانتینر / واکن')
     empty_number = models.CharField(max_length=15, verbose_name='کانتینر خالی')
     commodity = models.CharField(max_length=100, verbose_name='نوع جنس')
     quantity = models.CharField(max_length=20, verbose_name='تعداد')
-    net_weight = models.IntegerField(verbose_name='وزن خالص')
+    net_weight = models.IntegerField(verbose_name='وزن مجموعی')
     container_weight = models.CharField(
         max_length=1, choices=WEIGHT_CHOICES, verbose_name='وزن کانتنر', default=0)
-    licens_number = models.IntegerField(verbose_name='شماره جواز')
-    b_l_number = models.IntegerField(verbose_name='شماره B/L')
+    licens_number = models.IntegerField(
+        verbose_name='شماره جواز', blank=True, null=True)
+    b_l_number = models.IntegerField(
+        verbose_name='شماره B/L', blank=True, null=True)
     driver = models.CharField(max_length=20, verbose_name='درایور')
     driver_father = models.CharField(
-        max_length=20, verbose_name='نام پدر درایور')
+        max_length=20, verbose_name='نام پدر درایور', blank=True, null=True)
     truck_number = models.IntegerField(verbose_name='نمبر لاری')
     transport = models.CharField(max_length=20, verbose_name='ترانسپورت')
     asab_shasi = models.IntegerField(verbose_name='شاسی اسب')
@@ -116,3 +118,11 @@ class Account(models.Model):
     recieve_date = models.DateField(
         verbose_name="تاریخ رسید", default=timezone.now)
     amount = models.FloatField(verbose_name="مقدار")
+
+
+# shasi both
+# Comissionar
+# destination custome and write just destination
+# chadari, 20ft container, 40, 45, kafi
+# بازګشتی است، بازګشت شد، محصولی است
+# container wet 4500
