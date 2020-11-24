@@ -57,14 +57,12 @@
                             <thead>
                                 <tr>
                                 <th>#</th>
-                                <th>صاحب مال</th>
                                 <th>نمبر بارنامه</th>  
-                                <th>کرایه</th>
-                                <th>مصارف حمالی</th>
-                                <th>انوایس</th>
-                                <th>کمیشن</th>
-                                <th>مصارف کمرک</th>
+                                <th>صاحب مال</th>
+                                <th>دریور</th>
                                 <th>مجوعه</th>
+                                <th>وصول شده</th>
+                                <th>باقی مانده</th>
                                 <!-- <th>خواندن/ اپدیت / حذف</th> -->
                                 <th style="border-right: solid rgb(231, 230, 230) 1.4px;">عملیات </th>
                                 </tr>
@@ -74,14 +72,12 @@
                                 {% for farebill in farebills %}
                                 <tr>
                                 <td>{{ forloop.counter }}</td>
-                                <td>{{ farebill.bill.consignee.name }}</td>
                                 <td>{{ farebill.bill.bill_number }}</td>
-                                <td>{{ farebill.rent }}</td>
-                                <td>{{ farebill.porterage_expenses }}</td>
-                                <td>{{ farebill.invoice_copy }}</td>
-                                <td>{{ farebill.commission_fee }}</td>
-                                <td>{{ farebill.custom_expenses }}</td>
+                                <td>{{ farebill.bill.consignee.name }}</td>
+                                <td>{{ farebill.bill.driver.name }}</td>
                                 <td>{{ farebill.total_expenses }}</td>
+                                <td>{{ farebill.received }}</td>
+                                <td>{{ farebill.remained }}</td>
                                 <td class="text-center">
                                     <!-- Read bill buttons -->
                                     <a href="{% url 'farebill-detail' farebill.pk %}" class="btn btn-info btn-sm">

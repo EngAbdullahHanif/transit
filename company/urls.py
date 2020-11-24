@@ -3,11 +3,12 @@ from django.urls import path
 from company.views import(
     HomeView, BillCreateView, BillListView, BillUpdateView, BillDeleteView, BillDetailView,
     FareBillCreateView, FareBillListView, FareBillDetailView, FareBillUpdateView, FareBillDeleteView,
-    ConsigneeCreateView, ConsigneeListView, ConsigneeUpdateView, ConsigneeDeleteView, Consignee_bills_detail, Consignee_account_detail,
+    ConsigneeCreateView, ConsigneeListView, ConsigneeUpdateView, ConsigneeDeleteView, Consignee_bills_detail, Consignee_account_detail, ConsigneeReportView,
     CommissionaireCreateView, CommissionaireListView, CommissionaireUpdateView, CommissionaireDeleteView,
-    ReciveCreateView, ReciveListView, ReciveUpdateView, ReciveDeleteView,
-    AccountCreateView, AccountDeleteView, AccountListView, AccountUpdateView,
-    consignee_report,
+    RecieveCreateView, RecieveListView, RecieveUpdateView, RecieveDeleteView,
+    AccountCreateView, AccountDeleteView, AccountListView, AccountUpdateView, AccountReport,
+    DriverListView, DriverUpdateView, DriverDeleteView, DriverFareBillsListView, DriverCreateView,
+    DoseBolaqCreateView, DoseBolaqListView, DoseBolaqUpdateView, DoseBolaqDeleteView, dosebolaq_report,
 )
 
 urlpatterns = [
@@ -40,7 +41,7 @@ urlpatterns = [
     path('consignee/<int:pk>/account', Consignee_account_detail,
          name='consignee-accounts-detail'),
 
-    path('consignee/report', consignee_report, name='consignee-report'),
+    path('consignee/report', ConsigneeReportView.as_view(), name='consignee-report'),
 
 
     path('commissionaire', CommissionaireCreateView.as_view(),
@@ -53,17 +54,39 @@ urlpatterns = [
          name='commissionaire-delete'),
 
 
-    path('recives', ReciveListView.as_view(), name='recives-list'),
-    path('bill/<int:pk>/recive', ReciveCreateView.as_view(), name='recive-create'),
-    path('recive/<int:pk>/update', ReciveUpdateView.as_view(), name='recive-update'),
-    path('recive/<int:pk>/delete', ReciveDeleteView.as_view(), name='recive-delete'),
+    path('recieves', RecieveListView.as_view(), name='recieves-list'),
+    path('bill/<int:pk>/recieve', RecieveCreateView.as_view(), name='recieve-create'),
+    path('recieve/<int:pk>/update',
+         RecieveUpdateView.as_view(), name='recieve-update'),
+    path('recieve/<int:pk>/delete',
+         RecieveDeleteView.as_view(), name='recieve-delete'),
 
 
     path('accounts/', AccountListView.as_view(), name='accounts-list'),
-    path('account/rceate', AccountCreateView.as_view(), name='account-create'),
+    path('account/create', AccountCreateView.as_view(), name='account-create'),
     path('accounts/<int:pk>/update',
          AccountUpdateView.as_view(), name='account-update'),
     path('accounts/<int:pk>/delete',
          AccountDeleteView.as_view(), name='account-delete'),
+    path('accounts/report/', AccountReport.as_view(), name='accounts-report'),
+
+
+    path('drivers', DriverListView.as_view(), name='drivers-list'),
+    path('driver', DriverCreateView.as_view(), name='driver-create'),
+    path('driver/<int:pk>/update', DriverUpdateView.as_view(), name='driver-update'),
+    path('driver/<int:pk>/delete', DriverDeleteView.as_view(), name='driver-delete'),
+    path('driver/<int:pk>/farebills',
+         DriverFareBillsListView.as_view(), name='driver-farebills-list'),
+
+    path('dosebolaq', DoseBolaqCreateView.as_view(),
+         name='dosebolaq-create'),
+    path('dosebolaqs', DoseBolaqListView.as_view(),
+         name='dosebolaqs-list'),
+    path('dosebolaq/<int:pk>/update', DoseBolaqUpdateView.as_view(),
+         name='dosebolaq-update'),
+    path('dosebolaq/<int:pk>/delete', DoseBolaqDeleteView.as_view(),
+         name='dosebolaq-delete'),
+    path('dosebolaq/report', dosebolaq_report,
+         name='dosebolaq-report'),
 
 ]

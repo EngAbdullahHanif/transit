@@ -146,18 +146,18 @@ background:#eee;
                       <div class="row">
                         <div class="col-12">
                           <div class="invoice-title">
-                            <h5 class="float-right m-t-0">
-                            تاریخ : {{farebill.check_number}} 
-                            </h5>
-                            <h5 class="m-t-0">
+                            <span class="float-right m-t-0 " style="font-size:17px">
+                            تاریخ : {{farebill.farebill_date}} 
+                            </span>
+                            <span class="m-t-0" style="font-size:17px">
                               نمبر بارنامه :{{ farebill.bill.bill_number }}
-                            </h5>
+                            </span>
                           </div>
                           <hr />
 
                           <div class="row">
                             <div class="col-6">
-                              <p>اسم شرکت: شرکت احمدی
+                              <p>اسم شرکت: {{farebill.bill.company.name}}
                               <br/>
                               <br/>
                               اسم صاحب بار: {{farebill.bill.consignee.name}}
@@ -167,7 +167,7 @@ background:#eee;
                             
                             <div class="col-6 ">
                               <p class="">
-                               نمبر کانتینر: {{farebill.bill.container_number}}
+                               نمبر کانتینر: {{farebill.bill.get_container_number_display}}
                               </p>
                               <p class="">
                                شماره تیلیفون صاحب بار: {{farebill.bill.consignee.phone_number}}

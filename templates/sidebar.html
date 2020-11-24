@@ -39,19 +39,21 @@
             <li><a href="{% url 'bills-list' %}">لست بارنامه ها</a></li>
             <li><a href="{% url 'bill-create' %}">ثبت بارنامه جدید</a></li>
             <li><a href="{% url 'farebills-list' %}">لست کرایه خطها</a></li>
-            <li><a href="">گزارشات</a></li>
+            {% comment %} <li><a href="">گزارشات</a></li> {% endcomment %}
           </ul>
         </li>
 
         <li class="has_sub">
           <a href="javascript:void(0);" class="waves-effect"
-            ><i class=" mdi mdi-qrcode-scan "></i> <span> مشتریان </span>
+            ><i class=" mdi mdi-qrcode-scan "></i> <span> اشخاص </span>
             <span class="menu-arrow float-right"
               ><i class="mdi mdi-chevron-right"></i></span
           ></a>
           <ul class="list-unstyled">
-            <li><a href="{% url 'consignees-list' %}">لست مشتریان </a></li>
-            <li><a href="{% url 'consignee-create' %}">ثبت مشتری جدید</a></li>
+            <li><a href="{% url 'consignees-list' %}">لست صاحب مالها </a></li>
+            <li><a href="{% url 'consignee-create' %}">ثبت صاحب مال جدید</a></li>
+            <li><a href="{% url 'drivers-list' %}">لست دریورها </a></li>
+            <li><a href="{% url 'driver-create' %}">ثبت دریور جدید</a></li>
             <li><a href="{% url 'consignee-report' %}">گزارشات</a></li>
           </ul>
         </li>
@@ -63,8 +65,8 @@
               ><i class="mdi mdi-chevron-right"></i></span
           ></a>
           <ul class="list-unstyled">
-            <li><a href="{% url 'recives-list' %}">لست محصول </a></li>
-            <li><a href="">گزارشات</a></li>
+            <li><a href="{% url 'recieves-list' %}">لست محصول </a></li>
+            {% comment %} <li><a href="">گزارشات</a></li> {% endcomment %}
           </ul>
         </li>
 
@@ -76,20 +78,23 @@
           ></a>
           <ul class="list-unstyled">
             <li><a href="{% url 'accounts-list' %}">حسابات رسیده</a></li>
-            <li><a href="">گزارشات</a></li>
+            <li><a href="{% url 'accounts-report' %}">گزارشات</a></li>
           </ul>
         </li>
 
         <li class="has_sub">
           <a href="javascript:void(0);" class="waves-effect"
-            ><i class=" mdi mdi-react "></i> <span> مصارف </span>
+            ><i class=" mdi mdi-react "></i> <span>مصارف و دوزبالقها </span>
             <span class="menu-arrow float-right"
               ><i class="mdi mdi-chevron-right"></i></span
           ></a>
           <ul class="list-unstyled">
             <li><a href="{% url 'items-list' %}">لست مصارف روزانه</a></li>
             <li><a href="{% url 'item-create' %}"> ثبت مصارف روزانه</a></li>
-            <li><a href="">گزارشات</a></li>
+            <li><a href="{% url 'expenses-report' %}">گزارشات مصارف</a></li>
+            <li><a href="{% url 'dosebolaqs-list' %}">لست دوزبلاقهای </a></li>
+            <li><a href="{% url 'dosebolaq-create' %}"> ثبت دوزبلاق جدید</a></li>
+            <li><a href="{% url 'dosebolaq-report' %}">گزارشات دوزبلاقها</a></li>
           </ul>
         </li>
         <li class="has_sub">

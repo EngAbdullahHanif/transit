@@ -36,8 +36,8 @@
                 <div class="form-row">
                     <div class="form-group col-md-3 col-lg-3">
                         <label for="minDate">نام صاحب مال</label>
-                        <select name="consignee" class="select form-control" id="id_consignee">
-                        <option value="" selected="">---------</option>
+                        <select name="consignee" class="select form-control" id="id_consignee" required=true>
+                        <option value="" >---------</option>
                         {% for consignee in consignees %}
                             <option value="{{ consignee.name }}">{{ consignee.name }}</option>
                         {% endfor %}
@@ -48,11 +48,11 @@
                         <input type="text" class="form-control" name="commodity" id="maxDate" placeholder="نوعیت جنس ">
                     </div>
                     <div class="form-group col-md-3 col-lg-3">
-                        <label for="minDate">از تاریخ</label>
+                        <label for="minDate">از تاریخ (خروج)</label>
                         <input type="date" class="form-control" name="min_date" id="minDate" placeholder="از تاریخ">
                     </div>
                     <div class="form-group col-md-3 col-lg-3">
-                        <label for="maxDate">ایلا تاریخ</label>
+                        <label for="maxDate">ایلا تاریخ (خروج)</label>
                         <input type="date" class="form-control" name="max_date" id="maxDate" placeholder="ایلا تاریخ">
                     </div>
                 </div>
@@ -103,9 +103,14 @@
                             <thead>
                                 <tr>
                                 <th>#</th>
-                                <th>نام</th>  
-                                <!-- <th>خواندن/ اپدیت / حذف</th> -->
-                                <th style="border-right: solid rgb(231, 230, 230) 1.4px;">عملیات </th>
+                                <th>i نمبر</th>  
+                                <th>نمبر پلیت</th>  
+                                <th>تعداد</th>  
+                                <th>وزن بار</th>  
+                                <th>تاریخ</th>  
+                                <th>مصارف طالبان</th>  
+                                <th>مصارف گمرک اسلام قلعه</th>  
+                                <th>مصارف باسکول</th>  
                                 </tr>
                             </thead>
 
@@ -113,12 +118,16 @@
                                 {% for bill in bills %}
                                 <tr>
                                 <td>{{ forloop.counter }}</td>
-                                {% for recive in bill.recive_set.all %}
-                                    <td>{{ recive.i_number }}</td>
-                                    <td>{{ recive.taliban_expenses }}</td>
-                                {% endfor %}
+                                <td>{{ bill.recieve.i_number }}</td>
+                                <td>{{ bill.driver.truck_number }}</td>
+                                <td>{{ bill.quantity }}</td>
+                                <td>{{ bill.net_weight }}</td>
+                                <td>{{ bill.exit_date }}</td>
+                                <td>{{ bill.recieve.taliban_expenses }}</td>
+                                <td>{{ bill.recieve.eslam_qala_expenses }}</td>
+                                <td>{{ bill.recieve.bascol_expenses }}</td>
                                 </tr> 
-                                {% endfor %}               
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -128,6 +137,40 @@
         </div>
     </div>
     <!-- container fluid -->
+    <h5 style="text-align: center;">مجموع مصارف: {{total_expenses}} <small class="text-primary">(افغانی)</small></h5>
+      <div class="row " style="margin-top: 50px;">
+          <div class="col-12">
+              <div class="panel panel-default">
+              <div class="">
+                  <div class="table-responsive">
+                  <table class="table">
+                      <thead>
+                      <tr>
+                          <td class="text-center">
+                          <strong class="font-18">مجموع مصارف طالبان</strong>
+                          </td>
+                          <td class="text-center">
+                          <strong class="font-18">مجموع مصارف گمرک اسلام قلعه</strong>
+                          </td><td class="text-center">
+                          <strong class="font-18">مجموع مصارف گمرک باسکول</strong>
+                          </td>
+                      </tr>
+                      </thead>
+
+                      <tbody>
+                          <tr>
+                            <td class="text-center">{{taliban_expenses}} </td>
+                            <td class="text-center">{{eslam_qala_expenses}} </td>
+                            <td class="text-center">{{bascol_expenses}} </td>
+                          </tr>
+                      </tbody>
+                  </table>
+                  </div>
+              </div>
+              </div>
+          </div>
+      </div>
+      <!-- end row -->
   </div>
   <!-- Page content Wrapper -->
 </div>

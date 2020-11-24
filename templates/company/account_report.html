@@ -1,0 +1,255 @@
+{% extends 'base.html' %}
+{% block title %}
+  حسابات
+{% endblock title %}
+{% load crispy_forms_tags %} 
+{% block content %}
+<div class="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                    <h5 class="m-0 text-center" style="font-size: 25px;">
+                        راپورها
+                    </h5>
+                    <a
+                        href="#"
+                        class="btn btn-light btn-lg"
+                        style="float: left;"
+                    >
+                        &nbsp;بازکشت
+                        <li class="fas fa-arrow-left"></li>
+                    </a>
+                    </div>
+                    <!-- end col -->
+                </div>
+                <!-- end row -->
+                </div>
+                <!-- end page-title-box -->
+            </div>
+        </div>
+        <!-- end page title -->
+
+        <h5 style="text-align: center;">راپور امروز  </h5>
+        <div class="row " style="margin-top: 50px;">
+            <div class="col-12">
+                <div class="panel panel-default">
+                <div class="">
+                    <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <td class="text-center">
+                            <strong class="font-18">روز</strong>
+                            </td>
+                            <td class="text-center">
+                            <strong class="font-18">پول <small class="text-primary">(افغانی)</small></strong>
+                            </td>
+                        </tr>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {% for day, values in today_amount.items %}
+                            <tr>
+                                <td class="text-center">{{current_day}}</td>
+                                {% if values %}
+                                    <td class="text-center">{{values}} </td>
+                                {% else %}
+                                    <td class="text-center">نه دارد </td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    </div>
+
+                    <div class="d-print-none mo-mt-2">
+                    <div class="float-right">
+                        <a
+                        href="javascript:window.print()"
+                        class="btn btn-success waves-effect waves-light"
+                        ><i class="fa fa-print"></i
+                        ></a>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+        <hr style="margin: 40px; ">
+
+        <h5 style="text-align: center;">راپور هفته قبلی  </h5>
+        <div class="row " style="margin-top: 50px;">
+            <div class="col-12">
+                <div class="panel panel-default">
+                <div class="">
+                    <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <td class="text-center">
+                            <strong class="font-18">روز</strong>
+                            </td>
+                            <td class="text-center">
+                            <strong class="font-18">پول <small class="text-primary">(افغانی)</small></strong>
+                            </td>
+                        </tr>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {% for day, values in weekly_amount.items %}
+                            <tr>
+                                <td class="text-center">{{day}}</td>
+                                {% if values %}
+                                    <td class="text-center">{{values}} </td>
+                                {% else %}
+                                    <td class="text-center">نه دارد </td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    </div>
+
+                    <div class="d-print-none mo-mt-2">
+                    <div class="float-right">
+                        <a
+                        href="javascript:window.print()"
+                        class="btn btn-success waves-effect waves-light"
+                        ><i class="fa fa-print"></i
+                        ></a>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+        <hr style="margin: 40px; ">
+
+        <h5 style="text-align: center;">راپور ماهانه سال {{current_year}}</h5>
+        <div class="row " style="margin-top: 50px;">
+            <div class="col-12">
+                <div class="panel panel-default">
+                <div class="">
+                    <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <td class="text-center">
+                            <strong class="font-18">ماه</strong>
+                            </td>
+                            <td class="text-center">
+                            <strong class="font-18">پول <small class="text-primary">(افغانی)</small></strong>
+                            </td>
+                        </tr>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {% for month, values in monthly_amount.items %}
+                            <tr>
+                                <td class="text-center">{{month}}</td>
+                                {% for key, value in values.items %}
+                                    {% if value %}
+                                        <td class="text-center">{{value}} </td>
+                                    {% else %}
+                                        <td class="text-center">نه دارد </td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    </div>
+
+                    <div class="d-print-none mo-mt-2">
+                    <div class="float-right">
+                        <a
+                        href="javascript:window.print()"
+                        class="btn btn-success waves-effect waves-light"
+                        ><i class="fa fa-print"></i
+                        ></a>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+        <hr style="margin: 40px; ">
+
+        <h5 style="text-align: center;">راپور سالانه</h5>
+        <div class="row " style="margin-top: 50px;">
+            <div class="col-12">
+                <div class="panel panel-default">
+                <div class="">
+                    <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <td class="text-center">
+                            <strong class="font-18">سال</strong>
+                            </td>
+                            <td class="text-center">
+                            <strong class="font-18">پول <small class="text-primary">(افغانی)</small></strong>
+                            </td>
+                        </tr>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {% for year, values in anual_amount.items %}
+                            <tr>
+                                <td class="text-center">{{year}}</td>
+                                {% for key, value in values.items %}
+                                    {% if value %}
+                                        <td class="text-center">{{value}} </td>
+                                    {% else %}
+                                        <td class="text-center">نه دارد </td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    </div>
+
+                    <div class="d-print-none mo-mt-2">
+                    <div class="float-right">
+                        <a
+                        href="javascript:window.print()"
+                        class="btn btn-success waves-effect waves-light"
+                        ><i class="fa fa-print"></i
+                        ></a>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+            <!-- end row -->        
+        </div>
+        </div>
+    </div>
+    <!-- end col -->
+    </div>
+    <!-- Page main content ends -->
+        
+        <!-- end row -->
+    </div>
+    <!-- container fluid -->
+</div>
+<!-- Page content Wrapper -->
+
+</div>
+<!-- content -->
+
+        
+{% endblock content %}
+

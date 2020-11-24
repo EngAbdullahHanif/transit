@@ -34,10 +34,20 @@
                 <!-- Row starts -->
                 <div class="row m-t-30">
                   <div class="form-group col-lg-4">
-                    {{ form.description|as_crispy_field }}
+                    {{ form.consumer|as_crispy_field }}
                   </div>
                   <div class="form-group col-lg-4">
                     {{form.price|as_crispy_field }}
+                  </div>
+                  <div class="form-group col-lg-4">
+                    {{ form.bill|as_crispy_field }}
+                  </div>
+                </div>
+                <!-- Row Ends -->
+                <!-- Row starts -->
+                <div class="row ">
+                  <div class="form-group col-lg-4">
+                    {{ form.description|as_crispy_field }}
                   </div>
                   <div class="form-group col-lg-4">
                     {{ form.purchase_date|as_crispy_field }}

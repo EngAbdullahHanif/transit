@@ -146,12 +146,12 @@ background:#eee;
                       <div class="row">
                         <div class="col-12">
                           <div class="invoice-title">
-                            <h5 class="float-right m-t-0">
+                            <span class="float-right m-t-0 " style="font-size:17px">
                             نمبر بیحک : {{bill.check_number}} 
-                            </h5>
-                            <h5 class="m-t-0">
+                           </span>
+                            <span class="m-t-0" style="font-size:17px">
                               نمبر بارنامه :{{ bill.bill_number }}
-                            </h5>
+                            </span>
                           </div>
                           <hr />
 
@@ -160,7 +160,7 @@ background:#eee;
                               <p>تاریخ ورود: {{bill.arrival_date}}
                               <br/>
                               <br/>
-                              تاریخ  خروج: {{bill.lading_date}}
+                              تاریخ  خروج: {{bill.exit_date}}
                               <br/>
                               <br/>
                             </div>
@@ -177,71 +177,79 @@ background:#eee;
 
                           <div class="row">
                             <div class="col-6">
-                              <p>صاحب مال: {{bill.consignee}}
-                              <br/>
-                              <br/>
-                              اکت (سي-ار-ام): {{bill.act_cmr}}
+                              <p>صاحب مال: {{bill.company.name}}
                               <br/>
                               <br/>
                             </div>
                             
                             <div class="col-6 ">
                               <p class="">
-                               نمبر کانتینر: {{bill.container_number}}
+                                اکت (سي-ار-ام): {{bill.company.tin_number}}
                               </p>
-                              <p class="">
-                               کانتینر خالی: {{bill.empty_number}}
-                              </p>
+                              
+                              
                             </div>
                           </div>
 
                           <div class="row">
                             <div class="col-6">
+                              نوعیت کانتینر: {{bill.get_container_type_display}}
+                              <br/>
+                              <br/>
+                              <p class="">وزن خالص: {{bill.net_weight}}</p>
+                              <p class="">وزن مجموعی: {{bill.total_weight}}</p>
+                              <br/>
+                              <br/>
+                            </div>
+                            
+                            <div class="col-6 ">
+                              <p class="">نمبر کانتینر: {{bill.container_number}}</p>
+                              <p class="">وزن کانتینر: {{bill.container_weight}}</p>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-6">
+                            <p class="">
+                               کانتینر خالی: {{bill.get_empty_number_display  }}
+                              </p>
                               <p>نوع جنس: {{bill.commodity}}
                               <br/>
                               <br/>
-                              تعداد: {{bill.quantity}}
+                            </div>
+                            
+                            <div class="col-6 ">
+                              <p class=""> تعداد: {{bill.quantity}} </p>
+                              <p class="">ترانسپورت: {{bill.transport}}</p>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-6">
+                            <p class="">
+                               اسم دریور: {{bill.driver.name  }}
+                              </p>
+                              <p>
+                                اسم پدر: {{bill.driver.name}}
+                              </p>
                               <br/>
                               <br/>
                             </div>
                             
                             <div class="col-6 ">
-                              <p class="">
-                                وزن خالص: {{bill.net_weight}}
-                              </p>
-                              <p class="">
-                               وزن مجموعه: 980989
-                              </p>
-                            </div>
+                              <p>شماره تماس دریور: {{bill.driver.name}}</p>
+                              <p>نمبر لاری: {{bill.driver.truck_number}}</p>
+                           </div>
                           </div>
 
                           <div class="row">
                             <div class="col-6">
-                              <p>دریور: {{bill.driver}}
-                              <br/>
-                              <br/>
-                              نمبر لاری: {{bill.truck_number}}
+                             <p class=""> شناسی تیلر: {{bill.truck_shasi}} </p>
                               <br/>
                               <br/>
                             </div>
                             
                             <div class="col-6 ">
-                              <p class="">
-                                 ترانسپورت: {{bill.transport}}
-                              </p>
-                              <p class="">
-                              شناسی اسب: {{bill.asab_shasi}}
-                              </p>
-                            </div>
-                          </div>
-
-                          <div class="row">
-                            <div class="col-6">
-                              شناسی تیلر: {{bill.truck_shasi}}
-                            </div>
-                            
-                            <div class="col-6 ">
-                                 تین جواز: {{bill.tin_jawaz}}
+                             <p class="">شناسی اسب: {{bill.asab_shasi}} </p>
                             </div>
                           </div>
                         </div>

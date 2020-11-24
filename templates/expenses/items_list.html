@@ -40,9 +40,11 @@
                             <thead>
                                 <tr>
                                 <th>#</th>
+                                <th>صاحب بار</th>
                                 <th>توضحات</th>
                                 <th>قیمت</th>
                                 <th>تاریخ</th>
+                                <th>مصرف کننده</th>
                                 <th style="border-right: solid rgb(231, 230, 230) 1.4px;">عملیات </th>
                                 </tr>
                             </thead>
@@ -51,9 +53,11 @@
                                 {% for item in items %}
                                 <tr>
                                 <td>{{ forloop.counter }}</td>
+                                <td>{{ item.bill.consignee.name }}</td>
                                 <td>{{ item.description }}</td>
                                 <td>{{ item.price }}</td>
-                                <td class="miladi_date">{{ item.purchase_date }}</td>
+                                <td class="">{{ item.purchase_date }}</td>
+                                <td>{{ item.consumer }}</td>
                                 <td class="text-center">
                                     <!-- Update account buttons -->
                                     <a href="{% url 'item-update' item.pk %}" class=" btn btn-info btn-sm">

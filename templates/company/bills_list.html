@@ -60,9 +60,8 @@
                                 <th>نمبر بارنامه</th>  
                                 <th>صاحب مال</th>
                                 <th>اکت CMR</th>
-                                <th>نمبر کانتینر</th>
-                                <th>نمبر لاري</th>
-                                <th>وزن خالص</th>
+                                <th>شرکت - TIN</th>
+                                <th>دریور</th>
                                 <th>تاریخ ورود</th>
                                 <!-- <th>خواندن/ اپدیت / حذف</th> -->
                                 <th style="border-right: solid rgb(231, 230, 230) 1.4px;">عملیات </th>
@@ -76,10 +75,9 @@
                                 <td>{{ bill.bill_number }}</td>
                                 <td>{{ bill.consignee.name }}</td>
                                 <td>{{ bill.act_cmr }}</td>
-                                <td>{{ bill.container_number }}</td>
-                                <td>{{ bill.truck_number }}</td>
-                                <td>{{ bill.net_weight }}</td>
-                                <td>{{ bill.arrival_date }}</td>
+                                <td>{{ bill.company }}</td>
+                                <td>{{ bill.driver.name }}</td>
+                                <td class="">{{ bill.arrival_date }}</td>
                                 <td class="text-center">
                                     <!-- Read bill buttons -->
                                     <a href="{% url 'bill-detail' bill.pk %}" class="btn btn-info btn-sm">
@@ -95,7 +93,7 @@
                                     <span class="">حذف</span>
                                     </button>
                                     <a href='{% url 'farebill-create' bill.pk %}'  class=" btn btn-info btn-sm">ثبت کرایه خط</a>
-                                    <a href='#' class=" btn btn-info btn-sm" id="farebill-{{ bill.pk }}" data-farebill-id="{{ bill.pk }}">ثبت مصول</a>
+                                    <a href='{% url 'recieve-create' bill.pk %}' class=" btn btn-info btn-sm" id="farebill-{{ bill.pk }}" data-farebill-id="{{ bill.pk }}">ثبت مصول</a>
                                    {% comment %} <button type="button" id="create-farebill" class="delete-bill btn btn-danger btn-sm" 
                                     data-form-url="{% url 'bill-delete' bill.pk %}">
                                     <span class="">>ثبت کرایه خط</span>

@@ -2,7 +2,7 @@ from django.forms import ModelForm
 from django import forms
 from bootstrap_modal_forms.forms import BSModalModelForm
 
-from .models import Consignee, Commissionaire, BillofLading, FareBill, Recive, Account
+from .models import Consignee, Commissionaire, BillofLading, FareBill, Recieve, Account, Driver, DoseBolaq
 
 
 class BillForm(ModelForm):
@@ -19,21 +19,21 @@ class BillForm(ModelForm):
             'origin_custom',
             'destination_custom',
             'act_cmr',
+            'container_type',
             'container_number',
             'empty_number',
             'commodity',
             'quantity',
             'net_weight',
-            'container_weight',
             'licens_number',
             'b_l_number',
             'driver',
-            'driver_father',
-            'truck_number',
+            'company',
+            # 'truck_number',
             'transport',
             'asab_shasi',
             'truck_shasi',
-            'tin_jawaz',
+            # 'tin_jawaz',
         ]
 
 
@@ -49,6 +49,14 @@ class BillForm(ModelForm):
 
 
 class FareBillForm(ModelForm):
+    farebill_date = forms.DateField(
+        error_messages={
+            'invalid': 'لطفا به فارمت DD/MM/YYYY تاریخ وارد کنید.'},
+        widget=forms.TextInput(
+            attrs={'type': 'date'}),
+        label='تاریخ رسید '
+    )
+
     class Meta():
         model = FareBill
         fields = [
@@ -58,6 +66,7 @@ class FareBillForm(ModelForm):
             'invoice_copy',
             'commission_fee',
             'custom_expenses',
+            'received',
         ]
 
 
@@ -78,9 +87,9 @@ class CommissionaireForm(ModelForm):
         ]
 
 
-class ReciveForm(ModelForm):
+class RecieveForm(ModelForm):
     class Meta():
-        model = Recive
+        model = Recieve
         fields = [
             'i_number',
             'taliban_expenses',
@@ -107,3 +116,34 @@ class AccountModelForm(BSModalModelForm):
                 'required': 'مقدار الزامی میباشد.',
                 'min_vlaue': 'مقدار باید صفر یا از صفر بزرکتر باشد'}
         }
+
+
+class DriverModelForm(BSModalModelForm):
+    class Meta:
+        model = Driver
+        fields = ['name', 'truck_number']
+        error_messages = {
+            'name': {'required': 'نام الزامی میباشد'},
+            'truck_number': {
+                'required': 'نمبر پلیت الزامی میباشد.'}
+        }
+
+
+class DriverForm(ModelForm):
+    class Meta():
+        model = Driver
+        fields = [
+            'name',
+            'truck_number',
+        ]
+
+
+class DoseBolaqForm(ModelForm):
+    class Meta():
+        model = DoseBolaq
+        fields = [
+            'truck_number',
+            'amount',
+            'reciever',
+            'recieved_date',
+        ]

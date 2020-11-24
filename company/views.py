@@ -6,6 +6,12 @@ from django.views import generic
 from django.views.generic import TemplateView
 from django.views.generic import CreateView, ListView, UpdateView, DetailView
 from django.urls import reverse_lazy
+from django.utils import timezone
+from datetime import datetime, timedelta
+from django.db.models import Sum, F
+from django.db.models.functions import ExtractWeekDay
+from django.core.exceptions import ObjectDoesNotExist
+
 
 from bootstrap_modal_forms.generic import (
     BSModalDeleteView,
@@ -14,9 +20,13 @@ from bootstrap_modal_forms.generic import (
     BSModalReadView,
 )
 
-from .models import Consignee, Commissionaire, BillofLading, FareBill, Recive, Account
+from .models import (
+    Consignee, Commissionaire, BillofLading, FareBill, Recieve, Account, Driver, DoseBolaq
+)
+
 from .forms import (
-    BillForm, FareBillForm, ConsigneeForm, CommissionaireForm, ReciveForm, AccountModelForm,
+    BillForm, FareBillForm, ConsigneeForm, CommissionaireForm, RecieveForm, AccountModelForm,
+    DriverModelForm, DriverForm, DoseBolaqForm,
 )
 
 
@@ -28,6 +38,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
     template_name = 'home.html'
 
 
+# * Bill
 class BillCreateView(SuccessMessageMixin, CreateView):
     model = BillofLading
     template_name = 'company/bill_create.html'
@@ -78,6 +89,7 @@ class BillDetailView(DetailView):
 #     success_message = 'کرایه خط موفقانه ثبت کردید'
 
 
+# * Farebill
 class FareBillCreateView(CreateView):
     model = FareBill
     template_name = 'company/fare_bill_create.html'
@@ -96,6 +108,7 @@ class FareBillCreateView(CreateView):
             commission_fee = form.cleaned_data.get('commission_fee')
             custom_expenses = form.cleaned_data.get('custom_expenses')
             rent = form.cleaned_data.get('rent')
+            received = form.cleaned_data.get('received')
             # BillofLading.objects.filter()
 
             farebill = FareBill(
@@ -105,10 +118,14 @@ class FareBillCreateView(CreateView):
                 commission_fee=commission_fee,
                 custom_expenses=custom_expenses,
                 rent=rent,
+                received=received,
             )
             farebill.save()
             messages.success(self.request, 'کرایه خط موفقانه ثبت کردید')
             return redirect('bills-list')
+
+        messages.success(self.request, 'کرایه خط  ثبت نه گردید')
+        return redirect('bills-list')
 
     def get(self, *args, **kwargs):
         bill = kwargs['pk']
@@ -147,6 +164,7 @@ class FareBillDetailView(DetailView):
     context_object_name = 'farebill'
 
 
+# * Consignee
 class ConsigneeCreateView(SuccessMessageMixin, CreateView):
     model = Consignee
     template_name = 'company/consignee_create.html'
@@ -194,25 +212,28 @@ def Consignee_account_detail(request, pk):
     consignee = Consignee.objects.get(id=pk)
     accounts = Account.objects.filter(consignee=consignee)
     farbills = FareBill.objects.filter(bill__consignee=consignee)
-    recives = Recive.objects.filter(bill__consignee=consignee)
+    recieves = BillofLading.objects.filter(consignee=consignee)
 
     farebill_total_amount = sum([amount.total_expenses for amount in farbills])
-    recive_total_amount = sum([amount.total_expenses for amount in recives])
+    # last_date_tatal_remaind_amount = farebill_total_amount + recieve_total_amount
 
-    last_date_tatal_remaind_amount = farebill_total_amount + recive_total_amount
+    recieve_total_amount = 0
+    for re in recieves:
+        if re.recieve is not None:
+            print(re.recieve.total_expenses)
+            recieve_total_amount = recieve_total_amount + re.recieve.total_expenses
 
-    total_recived_amount = sum([account.amount for account in accounts])
-    total_remaind_amount = (farebill_total_amount +
-                            recive_total_amount) - total_recived_amount
+    total_recieved_amount = sum([account.amount for account in accounts])
+    total_remaind_amount = recieve_total_amount - total_recieved_amount
+
     context = {
         'consignee': consignee,
         'accounts': accounts,
         'farebill_total_amount': farebill_total_amount,
-        'recive_total_amount': recive_total_amount,
-        'total_recived_amount': total_recived_amount,
+        'recieve_total_amount': recieve_total_amount,
+        'total_recieved_amount': total_recieved_amount,
         'total_remaind_amount': total_remaind_amount
     }
-
     return render(request, 'company/consignee_accounts.html', context)
 
 
@@ -220,31 +241,62 @@ def is_valid_query_param(param):
     return param != "" and param is not None
 
 
-def consignee_report(request):
-    consignees = Consignee.objects.all()
-    accounts = Account.objects.all()
-    bills = []
-    if request.method == 'POST':
-        consignee_name = request.POST.get('consignee')
+class ConsigneeReportView(TemplateView):
+    def get(self, *args, **kwargs):
+        consignees = Consignee.objects.all()
+        bills = []
+        if self.request.method == 'POST':
+            consignee_name = request.POST.get('consignee')
+            consignee = Consignee.objects.get(name__icontains=consignee_name)
+            bills = BillofLading.objects.filter(consignee=consignee)
+
+        context = {
+            # 'consignee': consignee,
+            'consignees': consignees,
+            'bills': bills,
+        }
+        return render(self.request, 'company/consignee_report.html', context)
+
+    def post(self, *args, **kwargs):
+        consignees = Consignee.objects.all()
+        consignee_name = self.request.POST.get('consignee')
         consignee = Consignee.objects.get(name__icontains=consignee_name)
         bills = BillofLading.objects.filter(consignee=consignee)
-        # recives = {}
-        # for bill in bills:
-        #     recives[bill] = Recive.objects.filter(bill=bill)
 
-        max_date = request.POST.get('max_date')
-        min_date = request.POST.get('min_date')
+        commodity = self.request.POST.get('commodity')
+        max_date = self.request.POST.get('max_date')
+        min_date = self.request.POST.get('min_date')
+
+        if is_valid_query_param(commodity):
+            bills = bills.filter(commodity__icontains=commodity)
         if is_valid_query_param(min_date):
-            accounts = accounts.filter(recieve_date__gte=min_date)
-
+            bills = bills.filter(exit_date__gte=min_date)
         if is_valid_query_param(max_date):
-            accounts = accounts.filter(recieve_date__lte=max_date)
+            bills = bills.filter(exit_date__lte=max_date)
 
-    context = {
-        'consignees': consignees,
-        'bills': bills,
-    }
-    return render(request, 'company/consignee_report.html', context)
+        taliban_expenses = 0
+        eslam_qala_expenses = 0
+        bascol_expenses = 0
+        for bill in bills:
+            if bill.recieve is not None:
+                taliban_expenses = taliban_expenses + bill.recieve.taliban_expenses
+                eslam_qala_expenses = eslam_qala_expenses + bill.recieve.eslam_qala_expenses
+                bascol_expenses = bascol_expenses + bill.recieve.bascol_expenses
+
+        total_expenses = taliban_expenses + eslam_qala_expenses + bascol_expenses
+
+        context = {
+            'consignees': consignees,
+            'bills': bills,
+            'taliban_expenses': taliban_expenses,
+            'eslam_qala_expenses': eslam_qala_expenses,
+            'bascol_expenses': bascol_expenses,
+            'total_expenses': total_expenses,
+        }
+
+        return render(self.request, 'company/consignee_report.html', context)
+
+
 # class ConsigneeBillsDetailView(generic.DetailView):
 #     # model = FareBill
 #     # template_name = 'company/farebill_detail.html'
@@ -262,6 +314,7 @@ def consignee_report(request):
 #         return redirect(self.request, 'company/consignee_bills.html', context)
 
 
+# * Commissionaire
 class CommissionaireCreateView(SuccessMessageMixin, CreateView):
     model = Commissionaire
     template_name = 'company/commissionaire_create.html'
@@ -297,15 +350,16 @@ class CommissionaireDetailView(DetailView):
     context_object_name = 'farebill'
 
 
-class ReciveCreateView(CreateView):
-    model = Recive
-    template_name = 'company/recive_create.html'
-    form_class = ReciveForm
-    success_url = reverse_lazy('recive-create')
+# * Recieve Bills
+class RecieveCreateView(CreateView):
+    model = Recieve
+    template_name = 'company/recieve_create.html'
+    form_class = RecieveForm
+    success_url = reverse_lazy('recieve-create')
     success_message = 'موفقانه ثبت کردید'
 
     def post(self, *args, **kwargs):
-        form = ReciveForm(self.request.POST)
+        form = RecieveForm(self.request.POST)
         if form.is_valid():
             i_number = form.cleaned_data.get('i_number')
             taliban_expenses = form.cleaned_data.get('taliban_expenses')
@@ -313,54 +367,69 @@ class ReciveCreateView(CreateView):
             bascol_expenses = form.cleaned_data.get('bascol_expenses')
             bill = kwargs['pk']
             bill_instance = BillofLading.objects.get(id=bill)
-            recive = Recive(
-                bill=bill_instance,
+            recieve = Recieve(
                 i_number=i_number,
                 taliban_expenses=taliban_expenses,
                 eslam_qala_expenses=eslam_qala_expenses,
                 bascol_expenses=bascol_expenses,
             )
-            recive.save()
+            # *links the Recieve paper with Bill
+            recieve.save()
+            bill_instance.recieve = recieve
+            bill_instance.save()
             messages.success(self.request, 'محصول موفقانه ثبت کردید')
             return redirect('bills-list')
 
     def get(self, *args, **kwargs):
         bill = kwargs['pk']
         bill_instance = BillofLading.objects.get(id=bill)
-
-        if Recive.objects.filter(bill=bill_instance).exists():
+        if bill_instance.recieve is not None:
             messages.info(self.request, 'محصول از قبل ثبت کردیده است')
             return redirect('bills-list')
-        return super(ReciveCreateView, self).get(*args, **kwargs)
+        return super(RecieveCreateView, self).get(*args, **kwargs)
 
 
-class ReciveListView(ListView):
-    model = Recive
-    template_name = 'company/recives_list.html'
-    context_object_name = 'recives'
+class RecieveListView(ListView):
+    model = Recieve
+    template_name = 'company/recieves_list.html'
+    context_object_name = 'recieves'
+
+    # def get(self, *args, **kwargs):
+    #     bills = BillofLading.objects.all()
+    #     # recieves = {}
+    #     # for bill in bills:
+    #     #     if bill.recieve is not None:
+    #     #         recieves = bill.recieve.taliban_expenses
+    #     # print(recieves)
+    #     context = {
+    #         'bills': bills
+    # }
+
+    # return render(self.request, 'company/recieves_list.html', context)
 
 
-class ReciveUpdateView(SuccessMessageMixin, UpdateView):
-    model = Recive
-    template_name = 'company/recive_create.html'
-    form_class = ReciveForm
-    success_url = reverse_lazy('recives-list')
+class RecieveUpdateView(SuccessMessageMixin, UpdateView):
+    model = Recieve
+    template_name = 'company/recieve_create.html'
+    form_class = RecieveForm
+    success_url = reverse_lazy('recieves-list')
     success_message = 'موفقانه اپدیت کردید'
 
 
-class ReciveDeleteView(BSModalDeleteView):
-    model = Recive
-    template_name = 'company/modals/recive_delete.html'
-    success_url = reverse_lazy('recives-list')
+class RecieveDeleteView(BSModalDeleteView):
+    model = Recieve
+    template_name = 'company/modals/recieve_delete.html'
+    success_url = reverse_lazy('recieves-list')
     success_message = 'موفقانه حذف کردید'
 
 
-class ReciveDetailView(DetailView):
-    model = Recive
+class RecieveDetailView(DetailView):
+    model = Recieve
     template_name = 'company/bill_detail.html'
     context_object_name = 'farebill'
 
 
+# * Account
 class AccountCreateView(BSModalCreateView):
     template_name = 'company/account_modal/create_account.html'
     form_class = AccountModelForm
@@ -422,3 +491,213 @@ class AccountDeleteView(BSModalDeleteView):
     template_name = 'company/account_modal/delete_account.html'
     success_message = 'معامله موفقانه حذف شد'
     success_url = reverse_lazy('accounts-list')
+
+
+class AccountReport(TemplateView):
+    # template_name = 'company/account_report.html'
+    def get(self, *args, **kwargs):
+        current_year = timezone.now().year
+        weekDays = ("دوشنبه", "سه شنبه", "چهار شنبه",
+                    "پنج شنبه", "جمعه", "شنبه", "یک شنبه")
+
+        # * Todays Report
+        current_date = datetime.now().date()
+        current_day = weekDays[current_date.weekday()]
+        today_amount = Account.objects.filter(
+            recieve_date=current_date).aggregate(expends=Sum('amount'))
+
+        # * Weekly Report
+        dt = datetime.now()
+        start = (dt - timedelta(days=(dt.weekday() + 2) % 7)) - \
+            timedelta(days=7)
+        end = (start + timedelta(days=6))
+        date_list = Account.objects.filter(
+            recieve_date__range=(start.date(), end.date())).annotate(day=ExtractWeekDay('recieve_date')).values('day').annotate(expends=Sum('amount'))
+
+        weekl_amount = {}
+        weekDays = ("شنبه", "یک شنبه", "دوشنبه",
+                    "سه شنبه", "چهار شنبه", "پنج شنبه", "جمعه")
+        for day in date_list:
+            weekl_amount[weekDays[day['day']]] = day['expends']
+
+        # * Monthly Report
+        date_list = Account.objects.filter(
+            recieve_date__year=current_year).dates('recieve_date', 'month')
+
+        monthly_total_amount = []
+        for months in date_list:
+            monthly_total_amount.append(Account.objects.filter(recieve_date__year=current_year).filter(
+                recieve_date__month=months.month).aggregate(Sum('amount')))
+
+        monthly_amount = {}
+        num = 0
+        for months in date_list:
+            monthly_amount[months.month] = monthly_total_amount[num]
+            num += 1
+
+        # * Anual Report
+        date_list = Account.objects.all().dates('recieve_date', 'year')
+
+        anual_total_amount = []
+        for years in date_list:
+            anual_total_amount.append(Account.objects.filter(
+                recieve_date__year=years.year).aggregate(Sum('amount')))
+
+        anual_amount = {}
+        num = 0
+        for years in date_list:
+            anual_amount[years.year] = anual_total_amount[num]
+            num += 1
+
+        context = {
+            'current_year': current_year,
+            'current_day': current_day,
+            'today_amount': today_amount,
+            'weekly_amount': weekl_amount,
+            'monthly_amount': monthly_amount,
+            'anual_amount': anual_amount
+        }
+        return render(self.request, 'company/account_report.html', context)
+
+
+# * Driver
+class DriverCreateView(SuccessMessageMixin, CreateView):
+    model = Driver
+    template_name = 'company/driver_create.html'
+    form_class = DriverForm
+    success_url = reverse_lazy('driver-create')
+    success_message = 'موفقانه ثبت کردید'
+
+
+class DriverListView(ListView):
+    model = Driver
+    template_name = 'company/drivers_list.html'
+    context_object_name = 'drivers'
+
+
+class DriverUpdateView(BSModalUpdateView):
+    model = Driver
+    template_name = 'company/modals/update_driver.html'
+    form_class = DriverModelForm
+    success_message = 'دریور موفقانه اپدیت شد'
+    success_url = reverse_lazy('drivers-list')
+
+
+class DriverDeleteView(BSModalDeleteView):
+    model = Driver
+    template_name = 'company/modals/delete_driver.html'
+    success_message = 'دریور موفقانه حذف شد'
+    success_url = reverse_lazy('drivers-list')
+
+
+class DriverFareBillsListView(ListView):
+
+    def get(self, *args, **kwargs):
+        driver_id = kwargs['pk']
+        driver = Driver.objects.get(id=driver_id)
+        farebills = FareBill.objects.filter(bill__driver__id=driver_id)
+        total_remained = farebills.annotate(remained=(F(
+            'porterage_expenses') + F('invoice_copy') + F('commission_fee') + F('custom_expenses') + F('rent')) - F('received')).aggregate(reamined=Sum('remained'))
+
+        context = {
+            'driver': driver,
+            'farebills': farebills,
+            'total_remianed': total_remained,
+        }
+
+        return render(self.request, 'company/driver_farebills_list.html', context)
+
+
+# * Dosbolaq
+class DoseBolaqCreateView(SuccessMessageMixin, CreateView):
+    model = DoseBolaq
+    template_name = 'company/dosebolaq_create.html'
+    form_class = DoseBolaqForm
+    success_url = reverse_lazy('dosebolaq-create')
+    success_message = 'موفقانه ثبت کردید'
+
+
+class DoseBolaqListView(ListView):
+    model = DoseBolaq
+    template_name = 'company/dosebolaq_list.html'
+    context_object_name = 'dosebolaqs'
+
+
+class DoseBolaqUpdateView(SuccessMessageMixin, UpdateView):
+    model = DoseBolaq
+    template_name = 'company/dosebolaq_create.html'
+    form_class = DoseBolaqForm
+    success_url = reverse_lazy('dose-bolaq-list')
+    success_message = 'موفقانه اپدیت کردید'
+
+
+class DoseBolaqDeleteView(BSModalDeleteView):
+    model = DoseBolaq
+    template_name = 'company/modals/dosebolaq_delete.html'
+    success_url = reverse_lazy('dose-bolaq-list')
+    success_message = 'موفقانه حذف کردید'
+
+
+def dosebolaq_report(request):
+    current_year = timezone.now().year
+    weekDays = ("دوشنبه", "سه شنبه", "چهار شنبه",
+                "پنج شنبه", "جمعه", "شنبه", "یک شنبه")
+
+    # * Todays Report
+    current_date = datetime.now().date()
+    current_day = weekDays[current_date.weekday()]
+    today_amount = DoseBolaq.objects.filter(
+        recieved_date=current_date).aggregate(expends=Sum('amount'))
+
+    # * Weekly Report
+    dt = datetime.now()
+    start = (dt - timedelta(days=(dt.weekday() + 2) % 7)) - timedelta(days=7)
+    end = (start + timedelta(days=6))
+    date_list = DoseBolaq.objects.filter(
+        recieved_date__range=(start.date(), end.date())).annotate(day=ExtractWeekDay('recieved_date')).values('day').annotate(expends=Sum('amount'))
+
+    weekl_amount = {}
+    weekDays = ("شنبه", "یک شنبه", "دوشنبه",
+                "سه شنبه", "چهار شنبه", "پنج شنبه", "جمعه")
+    for day in date_list:
+        weekl_amount[weekDays[day['day']]] = day['expends']
+
+    # * Monthly Report
+    date_list = DoseBolaq.objects.filter(
+        recieved_date__year=current_year).dates('recieved_date', 'month')
+
+    monthly_total_amount = []
+    for months in date_list:
+        monthly_total_amount.append(DoseBolaq.objects.filter(recieved_date__year=current_year).filter(
+            recieved_date__month=months.month).aggregate(Sum('amount')))
+
+    monthly_amount = {}
+    num = 0
+    for months in date_list:
+        monthly_amount[months.month] = monthly_total_amount[num]
+        num += 1
+
+    # * Anual Report
+    date_list = DoseBolaq.objects.all().dates('recieved_date', 'year')
+
+    anual_total_amount = []
+    for years in date_list:
+        anual_total_amount.append(DoseBolaq.objects.filter(
+            recieved_date__year=years.year).aggregate(Sum('amount')))
+
+    anual_amount = {}
+    num = 0
+    for years in date_list:
+        anual_amount[years.year] = anual_total_amount[num]
+        num += 1
+
+    context = {
+        'current_year': current_year,
+        'current_day': current_day,
+        'today_amount': today_amount,
+        'weekly_amount': weekl_amount,
+        'monthly_amount': monthly_amount,
+        'anual_amount': anual_amount
+    }
+
+    return render(request, 'expenses/report.html', context)

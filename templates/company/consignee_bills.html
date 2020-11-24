@@ -58,7 +58,7 @@
                                 <td>{{ bill.bill_number }}</td>
                                 <td>{{ bill.act_cmr }}</td>
                                 <td>{{ bill.container_number }}</td>
-                                <td>{{ bill.truck_number }}</td>
+                                <td>{{ bill.driver.name }}</td>
                                 <td>{{ bill.net_weight }}</td>
                                 <td>{{ bill.arrival_date }}</td>
                                 <td class="text-center">
@@ -76,7 +76,7 @@
                                     <span class="">حذف</span>
                                     </button>
                                     <a href='{% url 'farebill-create' bill.pk %}' class=" btn btn-info btn-sm">ثبت کرایه خط</a>
-                                    <a href='{% url 'recive-create' bill.pk %}' class=" btn btn-info btn-sm">ثبت مصول</a>
+                                    <a href='{% url 'recieve-create' bill.pk %}' class=" btn btn-info btn-sm">ثبت مصول</a>
                                    {% comment %} <button type="button" id="create-farebill" class="delete-bill btn btn-danger btn-sm" 
                                     data-form-url="{% url 'bill-delete' bill.pk %}">
                                     <span class="">>ثبت کرایه خط</span>
